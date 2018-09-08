@@ -1,0 +1,73 @@
+body {
+	padding: 30px;
+	font-family: 'Roboto', sans-serif;
+	background-color: #def;
+}
+
+.test-box {
+	margin: 20px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.form-check-input {
+	position: static;
+}
+
+.form-control {
+	max-width: 768px;
+}
+
+.pitch-sel {
+	width: 180px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.clicked-twice {
+	color: #666;
+	background-color: #ddd;
+}
+
+.margin-out {
+	margin: 10px;
+	text-align: center;
+}
+
+.must-fill-radio {
+	padding: 5px;
+	border: 2px solid rgba(0, 0, 0, 0);
+	border-radius: 5px;
+}
+
+.input-group {
+	width: auto;
+	display: inline-flex;
+}
+
+.play-twice {
+	background-color: #DFD;
+}
+
+.disabled {
+	background-color: #FDD!important;
+}
+
+#diagnostic-test, #rel-test, #del-abs-test {
+	vertical-align: middle;
+	font-size: 20px;
+}
+
+audio {
+	width: 420px;
+	vertical-align: middle!important;
+}
+
+h5 {
+	margin-top: 30px;
+}
+
+h1, h2, h3 {
+	margin-top: 20px;
+}
+
