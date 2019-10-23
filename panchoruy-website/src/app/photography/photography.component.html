@@ -1,1 +1,4 @@
-<p>photography works! <app-home-button></app-home-button></p>
+<app-home-button></app-home-button>
+<div *ngFor="let photo of photoListObservable;">
+  <img src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}.jpg"/>
+</div>

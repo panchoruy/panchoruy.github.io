@@ -1,6 +1,6 @@
 <ul class="center-text">
   <ul>
-    <li *ngFor="let item of mainMenuItems as items;"> 
+    <li *ngFor="let item of mainMenuItems;"> 
       <a routerLink="/{{item | lowercase}}"> {{item}} </a>
     </li>
   </ul>
