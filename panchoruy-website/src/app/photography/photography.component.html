@@ -1,4 +1,4 @@
 <app-home-button></app-home-button>
-<div *ngFor="let photo of photoListObservable;">
+<div *ngFor="let photo of photoList;">
   <img src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}.jpg"/>
 </div>

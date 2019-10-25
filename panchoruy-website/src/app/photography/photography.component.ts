@@ -8,14 +8,15 @@ import { PhotoService } from './../photo.service';
 })
 export class PhotographyComponent implements OnInit {
 
-  photoListObservable: object;
+  photoList: any;
 
   constructor(private photoService: PhotoService) { }
 
   ngOnInit() {
-    this.photoService.searchPhoto().subscribe((data) => {
-      this.photoListObservable = data.photos.photo;
-      console.log(this.photoListObservable);
+    this.photoService.searchPhoto().subscribe((data: any) => {
+      console.log(data.constructor);
+      this.photoList = data.photos.photo;
+      console.log(this.photoList);
     });
   }
 }
