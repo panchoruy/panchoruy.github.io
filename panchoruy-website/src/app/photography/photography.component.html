@@ -1,4 +1,5 @@
 <app-home-button></app-home-button>
-<div *ngFor="let photo of photoList;">
-  <img src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_c.jpg"/>
+
+<div fxLayout="row" fxLayoutGap="10px">
+  <img *ngFor="let photo of photoList;" class="photo" src="https://farm{{photo.farm}}.staticflickr.com/{{photo.server}}/{{photo.id}}_{{photo.secret}}_c.jpg" />
 </div>
