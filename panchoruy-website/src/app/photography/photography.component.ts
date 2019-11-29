@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PhotoService } from './../photo.service';
 import { forkJoin } from 'rxjs';
 
+const _BASE_ROW_HEIGHT = 400
 
 @Component({
   selector: 'app-photography',
@@ -30,9 +31,9 @@ export class PhotographyComponent implements OnInit {
       var rows = [];
       var row = {width: 0, photoIndexes: []};
       for (var index = 0; index < photoDimensions.length; index++) {
-        var original = photoDimensions[index].find(size => size.label == "Original");
-        var ratio = original.width / original.height;
-        var scaledBaseWidth = ratio * 400;
+        var originalSize = photoDimensions[index].find(size => size.label == "Original");
+        var ratio = originalSize.width / originalSize.height;
+        var scaledBaseWidth = ratio * _BASE_ROW_HEIGHT;
         row.width += scaledBaseWidth;
         row.photoIndexes.push({index}); 
         if (row.width >= this.innerWidth) {
@@ -40,6 +41,7 @@ export class PhotographyComponent implements OnInit {
           row = {width: 0, photoIndexes: []};
         }
       }
+      console.log(rows);
     });
   }
 
