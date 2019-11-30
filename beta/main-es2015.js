@@ -829,8 +829,7 @@ let PhotographyComponent = class PhotographyComponent {
         this.photoService.getPhotoListByTagsObservable().subscribe((data) => {
             this.calculateAndDisplayRows(data.photos.photo);
         });
-        this.innerWidth = window.innerWidth;
-        this.photoContent = "";
+        this.innerWidth = window.innerWidth - 14;
     }
     calculateAndDisplayRows(photoList) {
         var photoObservables = photoList.map(photoInfo => this.photoService.getPhotoSizesObservable(photoInfo.id));

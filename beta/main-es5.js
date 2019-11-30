@@ -820,8 +820,7 @@ var __values = (this && this.__values) || function (o) {
                     this.photoService.getPhotoListByTagsObservable().subscribe(function (data) {
                         _this.calculateAndDisplayRows(data.photos.photo);
                     });
-                    this.innerWidth = window.innerWidth;
-                    this.photoContent = "";
+                    this.innerWidth = window.innerWidth - 14;
                 };
                 PhotographyComponent.prototype.calculateAndDisplayRows = function (photoList) {
                     var _this = this;

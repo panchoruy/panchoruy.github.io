@@ -13,7 +13,6 @@ export class PhotographyComponent implements OnInit {
   @ViewChild('photographyContainer', {static: false}) 
   photographyContainer: ElementRef;
   innerWidth: number;
-  photoContent: any;
 
   constructor(private photoService: PhotoService) { }
 
@@ -22,8 +21,7 @@ export class PhotographyComponent implements OnInit {
     this.photoService.getPhotoListByTagsObservable().subscribe((data: any) => {
       this.calculateAndDisplayRows(data.photos.photo);
     });
-    this.innerWidth = window.innerWidth;
-    this.photoContent = "";
+    this.innerWidth = window.innerWidth - 14;
   }
 
   private calculateAndDisplayRows(photoList: any) {
