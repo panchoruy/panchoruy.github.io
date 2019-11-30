@@ -1,3 +1,13 @@
+var __values = (this && this.__values) || function (o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+};
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"], {
         /***/ "./$$_lazy_route_resource lazy recursive": 
         /*!******************************************************!*\
@@ -28,7 +38,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<p>about works!</p>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<p>about works! <app-home-button></app-home-button></p>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html": 
@@ -72,7 +82,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<ul class=\"center-text\">\n  <ul>\n    <li *ngFor=\"let item of mainMenuItems as items;\"> \n      <a routerLink=\"/{{item | lowercase}}\"> {{item}} </a>\n    </li>\n  </ul>\n</ul>");
+            /* harmony default export */ __webpack_exports__["default"] = ("<ul class=\"center-text\">\n  <ul>\n    <li *ngFor=\"let item of mainMenuItems;\"> \n      <a routerLink=\"/{{item | lowercase}}\"> {{item}} </a>\n    </li>\n  </ul>\n</ul>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/page-not-found/page-not-found.component.html": 
@@ -83,7 +93,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"center-self\">\n   <h1>Oops!</h1>\n   That URL does not exist.\n   <app-home-button></app-home-button>\n</div>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<div class=\"center-self\">\n   <h1>Oops!</h1>\n   That URL does not exist.\n   \n   <app-home-button></app-home-button>\n</div>\n");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/photography/photography.component.html": 
@@ -94,7 +104,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<p>photography works! <app-home-button></app-home-button></p>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<app-home-button></app-home-button>\n<div #photographyContainer></div>");
             /***/ 
         }),
         /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/projects/projects.component.html": 
@@ -105,7 +115,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("<p>projects works!</p>\n");
+            /* harmony default export */ __webpack_exports__["default"] = ("<p>projects works! <app-home-button></app-home-button></p>\n");
             /***/ 
         }),
         /***/ "./node_modules/tslib/tslib.es6.js": 
@@ -531,39 +541,49 @@
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function () { return AppModule; });
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
-            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-            /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-            /* harmony import */ var _main_menu_main_menu_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./main-menu/main-menu.component */ "./src/app/main-menu/main-menu.component.ts");
-            /* harmony import */ var _photography_photography_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./photography/photography.component */ "./src/app/photography/photography.component.ts");
-            /* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
-            /* harmony import */ var _home_button_home_button_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./home-button/home-button.component */ "./src/app/home-button/home-button.component.ts");
-            /* harmony import */ var _projects_projects_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./projects/projects.component */ "./src/app/projects/projects.component.ts");
-            /* harmony import */ var _page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./page-not-found/page-not-found.component */ "./src/app/page-not-found/page-not-found.component.ts");
-            /* harmony import */ var _about_about_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./about/about.component */ "./src/app/about/about.component.ts");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/flex-layout */ "./node_modules/@angular/flex-layout/esm2015/flex-layout.js");
+            /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+            /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+            /* harmony import */ var _main_menu_main_menu_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./main-menu/main-menu.component */ "./src/app/main-menu/main-menu.component.ts");
+            /* harmony import */ var _photography_photography_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./photography/photography.component */ "./src/app/photography/photography.component.ts");
+            /* harmony import */ var _home_home_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./home/home.component */ "./src/app/home/home.component.ts");
+            /* harmony import */ var _home_button_home_button_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./home-button/home-button.component */ "./src/app/home-button/home-button.component.ts");
+            /* harmony import */ var _projects_projects_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./projects/projects.component */ "./src/app/projects/projects.component.ts");
+            /* harmony import */ var _page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./page-not-found/page-not-found.component */ "./src/app/page-not-found/page-not-found.component.ts");
+            /* harmony import */ var _about_about_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./about/about.component */ "./src/app/about/about.component.ts");
+            /* harmony import */ var _photo_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./photo.service */ "./src/app/photo.service.ts");
+            // Imports
+            // Declarations
+            // Providers
             var AppModule = /** @class */ (function () {
                 function AppModule() {
                 }
                 return AppModule;
             }());
             AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-                Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_3__["NgModule"])({
                     declarations: [
-                        _app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"],
-                        _main_menu_main_menu_component__WEBPACK_IMPORTED_MODULE_5__["MainMenuComponent"],
-                        _photography_photography_component__WEBPACK_IMPORTED_MODULE_6__["PhotographyComponent"],
-                        _home_home_component__WEBPACK_IMPORTED_MODULE_7__["HomeComponent"],
-                        _home_button_home_button_component__WEBPACK_IMPORTED_MODULE_8__["HomeButtonComponent"],
-                        _projects_projects_component__WEBPACK_IMPORTED_MODULE_9__["ProjectsComponent"],
-                        _page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_10__["PageNotFoundComponent"],
-                        _about_about_component__WEBPACK_IMPORTED_MODULE_11__["AboutComponent"]
+                        _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
+                        _main_menu_main_menu_component__WEBPACK_IMPORTED_MODULE_7__["MainMenuComponent"],
+                        _photography_photography_component__WEBPACK_IMPORTED_MODULE_8__["PhotographyComponent"],
+                        _home_home_component__WEBPACK_IMPORTED_MODULE_9__["HomeComponent"],
+                        _home_button_home_button_component__WEBPACK_IMPORTED_MODULE_10__["HomeButtonComponent"],
+                        _projects_projects_component__WEBPACK_IMPORTED_MODULE_11__["ProjectsComponent"],
+                        _page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_12__["PageNotFoundComponent"],
+                        _about_about_component__WEBPACK_IMPORTED_MODULE_13__["AboutComponent"]
                     ],
                     imports: [
                         _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
-                        _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"]
+                        _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
+                        _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
+                        _angular_flex_layout__WEBPACK_IMPORTED_MODULE_4__["FlexLayoutModule"]
                     ],
-                    providers: [],
-                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
+                    providers: [
+                        _photo_service__WEBPACK_IMPORTED_MODULE_14__["PhotoService"]
+                    ],
+                    bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
                 })
             ], AppModule);
             /***/ 
@@ -652,7 +672,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("a {\n  text-decoration: none;\n}\n\n* {\n  font-weight: 100;\n  font-size: 20px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3BhbmNoby9wcm9qZWN0cy9wYW5jaG9ydXkuZ2l0aHViLmlvL3BhbmNob3J1eS13ZWJzaXRlL3NyYy9hcHAvbWFpbi1tZW51L21haW4tbWVudS5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbWFpbi1tZW51L21haW4tbWVudS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLHFCQUFBO0FDQ0Y7O0FERUE7RUFDRSxnQkFBQTtFQUNBLGVBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL21haW4tbWVudS9tYWluLW1lbnUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJhIHtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xufVxuICBcbioge1xuICBmb250LXdlaWdodDogMTAwO1xuICBmb250LXNpemU6IDIwcHg7XG59ICAiLCJhIHtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xufVxuXG4qIHtcbiAgZm9udC13ZWlnaHQ6IDEwMDtcbiAgZm9udC1zaXplOiAyMHB4O1xufSJdfQ== */");
+            /* harmony default export */ __webpack_exports__["default"] = ("a {\n  text-decoration: none;\n}\n\n* {\n  font-weight: 100;\n  font-size: 20pt;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3BhbmNoby9wcm9qZWN0cy9wYW5jaG9ydXkuZ2l0aHViLmlvL3BhbmNob3J1eS13ZWJzaXRlL3NyYy9hcHAvbWFpbi1tZW51L21haW4tbWVudS5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbWFpbi1tZW51L21haW4tbWVudS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLHFCQUFBO0FDQ0Y7O0FERUE7RUFDRSxnQkFBQTtFQUNBLGVBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL21haW4tbWVudS9tYWluLW1lbnUuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJhIHtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xufVxuICBcbioge1xuICBmb250LXdlaWdodDogMTAwO1xuICBmb250LXNpemU6IDIwcHQ7XG59ICAiLCJhIHtcbiAgdGV4dC1kZWNvcmF0aW9uOiBub25lO1xufVxuXG4qIHtcbiAgZm9udC13ZWlnaHQ6IDEwMDtcbiAgZm9udC1zaXplOiAyMHB0O1xufSJdfQ== */");
             /***/ 
         }),
         /***/ "./src/app/main-menu/main-menu.component.ts": 
@@ -725,6 +745,47 @@
             ], PageNotFoundComponent);
             /***/ 
         }),
+        /***/ "./src/app/photo.service.ts": 
+        /*!**********************************!*\
+          !*** ./src/app/photo.service.ts ***!
+          \**********************************/
+        /*! exports provided: PhotoService */
+        /***/ (function (module, __webpack_exports__, __webpack_require__) {
+            "use strict";
+            __webpack_require__.r(__webpack_exports__);
+            /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PhotoService", function () { return PhotoService; });
+            /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+            /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+            var API_KEY = "35aaa78f22e30b2123c479fccac9a369";
+            var JSON_ARGS = "format=json&nojsoncallback=1";
+            var PhotoService = /** @class */ (function () {
+                function PhotoService(http) {
+                    this.http = http;
+                }
+                PhotoService.prototype.getPhotoSizesObservable = function (photo_id, api_key) {
+                    if (api_key === void 0) { api_key = API_KEY; }
+                    var request_url = "https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + photo_id + "&" + JSON_ARGS;
+                    return this.http.get(request_url);
+                };
+                PhotoService.prototype.getPhotoListByTagsObservable = function (tags, user_id, api_key) {
+                    if (tags === void 0) { tags = "website"; }
+                    if (user_id === void 0) { user_id = "panchoruy"; }
+                    if (api_key === void 0) { api_key = API_KEY; }
+                    var base_url = "https://www.flickr.com/services/rest/?method=flickr.photos.search";
+                    var request_url = base_url + "&api_key=" + api_key + "&user_id=" + user_id + "&tags=" + tags + "&" + JSON_ARGS;
+                    return this.http.get(request_url);
+                };
+                return PhotoService;
+            }());
+            PhotoService.ctorParameters = function () { return [
+                { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+            ]; };
+            PhotoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
+            ], PhotoService);
+            /***/ 
+        }),
         /***/ "./src/app/photography/photography.component.scss": 
         /*!********************************************************!*\
           !*** ./src/app/photography/photography.component.scss ***!
@@ -733,7 +794,7 @@
         /***/ (function (module, __webpack_exports__, __webpack_require__) {
             "use strict";
             __webpack_require__.r(__webpack_exports__);
-            /* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3Bob3RvZ3JhcGh5L3Bob3RvZ3JhcGh5LmNvbXBvbmVudC5zY3NzIn0= */");
+            /* harmony default export */ __webpack_exports__["default"] = (".photo {\n  max-height: 400px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3BhbmNoby9wcm9qZWN0cy9wYW5jaG9ydXkuZ2l0aHViLmlvL3BhbmNob3J1eS13ZWJzaXRlL3NyYy9hcHAvcGhvdG9ncmFwaHkvcGhvdG9ncmFwaHkuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3Bob3RvZ3JhcGh5L3Bob3RvZ3JhcGh5LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsaUJBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL3Bob3RvZ3JhcGh5L3Bob3RvZ3JhcGh5LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnBob3RvIHtcbiAgbWF4LWhlaWdodDogNDAwcHg7XG59IiwiLnBob3RvIHtcbiAgbWF4LWhlaWdodDogNDAwcHg7XG59Il19 */");
             /***/ 
         }),
         /***/ "./src/app/photography/photography.component.ts": 
@@ -747,13 +808,113 @@
             /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PhotographyComponent", function () { return PhotographyComponent; });
             /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+            /* harmony import */ var _photo_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../photo.service */ "./src/app/photo.service.ts");
+            /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+            var _BASE_ROW_HEIGHT = 400;
             var PhotographyComponent = /** @class */ (function () {
-                function PhotographyComponent() {
+                function PhotographyComponent(photoService) {
+                    this.photoService = photoService;
                 }
                 PhotographyComponent.prototype.ngOnInit = function () {
+                    var _this = this;
+                    this.photoService.getPhotoListByTagsObservable().subscribe(function (data) {
+                        _this.calculateAndDisplayRows(data.photos.photo);
+                    });
+                    this.innerWidth = window.innerWidth;
+                    this.photoContent = "";
+                };
+                PhotographyComponent.prototype.calculateAndDisplayRows = function (photoList) {
+                    var _this = this;
+                    var photoObservables = photoList.map(function (photoInfo) { return _this.photoService.getPhotoSizesObservable(photoInfo.id); });
+                    Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["forkJoin"])(photoObservables).subscribe(function (data) {
+                        var photoDimensions = data.map(function (element) { return element.sizes.size; });
+                        var rows = _this.calculateSizes(photoDimensions);
+                        var photoElements = _this.createPlaceholders(rows);
+                        _this.insertImages(photoElements, photoDimensions);
+                    });
+                };
+                // Given the photoDimensions that the flickr API delivers, calculate exact dimensions for each row.
+                PhotographyComponent.prototype.calculateSizes = function (photoDimensions) {
+                    var rows = [];
+                    var rowBuffer = { totalWidth: 0, photosInfo: [] };
+                    for (var index = 0; index < photoDimensions.length; index++) {
+                        var originalSize = photoDimensions[index].find(function (size) { return size.label == "Original"; });
+                        var ratio = originalSize.width / originalSize.height;
+                        var scaledBaseWidth = ratio * _BASE_ROW_HEIGHT;
+                        rowBuffer.totalWidth += scaledBaseWidth;
+                        rowBuffer.photosInfo.push({ "index": index, "width": scaledBaseWidth });
+                        if (rowBuffer.totalWidth >= this.innerWidth) {
+                            rows.push(this.normalizeRowDimensions(rowBuffer));
+                            rowBuffer = { totalWidth: 0, photosInfo: [] };
+                        }
+                    }
+                    return rows;
+                };
+                // Given the sizes of each row and element, create DOM divs with the appropriate sizes.
+                PhotographyComponent.prototype.createPlaceholders = function (rows) {
+                    var e_1, _a, e_2, _b;
+                    var container = this.photographyContainer.nativeElement;
+                    var photoElements = [];
+                    try {
+                        for (var rows_1 = __values(rows), rows_1_1 = rows_1.next(); !rows_1_1.done; rows_1_1 = rows_1.next()) {
+                            var row = rows_1_1.value;
+                            var rowElement = document.createElement("div");
+                            rowElement.style.display = "flex";
+                            try {
+                                for (var _c = (e_2 = void 0, __values(row.photosInfo)), _d = _c.next(); !_d.done; _d = _c.next()) {
+                                    var photoInfo = _d.value;
+                                    var photoElement = document.createElement("div");
+                                    photoElement.style.backgroundColor = "#333";
+                                    photoElement.style.height = row.height.toString() + "px";
+                                    photoElement.style.width = photoInfo.width.toString() + "px";
+                                    photoElements.push({ width: photoInfo.width, height: row.height, ref: photoElement });
+                                    rowElement.appendChild(photoElement);
+                                }
+                            }
+                            catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                            finally {
+                                try {
+                                    if (_d && !_d.done && (_b = _c.return)) _b.call(_c);
+                                }
+                                finally { if (e_2) throw e_2.error; }
+                            }
+                            container.appendChild(rowElement);
+                        }
+                    }
+                    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                    finally {
+                        try {
+                            if (rows_1_1 && !rows_1_1.done && (_a = rows_1.return)) _a.call(rows_1);
+                        }
+                        finally { if (e_1) throw e_1.error; }
+                    }
+                    return photoElements;
+                };
+                // Find the smallest size that's larger than the element, and create an img with the appropriate src.
+                PhotographyComponent.prototype.insertImages = function (photoElements, photoDimensions) {
+                    for (var index = 0; index < photoElements.length; index++) {
+                        var minSize = photoDimensions[index].find(function (size) { return size.width >= photoElements[index].width && size.height >= photoElements[index].height; });
+                        console.log(minSize.source);
+                        var photo = document.createElement("img");
+                        photo.setAttribute("src", minSize.source);
+                        photo.style.maxHeight = "100%";
+                        photoElements[index].ref.appendChild(photo);
+                    }
+                };
+                PhotographyComponent.prototype.normalizeRowDimensions = function (row) {
+                    var scaleRatio = row.totalWidth / this.innerWidth;
+                    row.totalWidth = this.innerWidth;
+                    row.height = _BASE_ROW_HEIGHT / scaleRatio;
+                    return row;
                 };
                 return PhotographyComponent;
             }());
+            PhotographyComponent.ctorParameters = function () { return [
+                { type: _photo_service__WEBPACK_IMPORTED_MODULE_2__["PhotoService"] }
+            ]; };
+            tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+                Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('photographyContainer', { static: false })
+            ], PhotographyComponent.prototype, "photographyContainer", void 0);
             PhotographyComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
                 Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
                     selector: 'app-photography',
