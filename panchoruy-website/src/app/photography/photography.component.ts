@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { PhotoService } from './../photo.service';
-import { forkJoin } from 'rxjs';
 
 const _BASE_ROW_HEIGHT = 400
 
@@ -11,86 +10,109 @@ const _BASE_ROW_HEIGHT = 400
 })
 export class PhotographyComponent implements OnInit {
   @ViewChild('photographyContainer', {static: false}) 
-  photographyContainer: ElementRef;
-  innerWidth: number;
+  private photographyContainer: ElementRef;
+  // Dictionary of photo metadata indexed by id
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    var containerWidth = this.photographyContainer.nativeElement.clientWidth;
+    var rows = this.calculateRowDimensions(containerWidth);
+    this.resizeAndPositionElements(rows);
+  }
+
+  // Dictionary of photoMetadata indexed by id.
+  private photosMetadata: any;
+  // Array of photoMetadata (in order of display).
+  private photosOrder: any;
+  // Array off all photoElements
+  private photoElements: any;
 
   constructor(private photoService: PhotoService) { }
 
-
   ngOnInit() {
-    this.photoService.getPhotoListByTagsObservable().subscribe((data: any) => {
-      this.calculateAndDisplayRows(data.photos.photo);
+    this.photoService.getPhotoMetadataByTagsObservable().subscribe((photosArray: any) => {
+      // Store metadata indexed by id in memory, so that we can find sources faster
+      this.photosOrder = shuffleInPlace(photosArray.map(element => element.id));
+      this.photosMetadata = indexedById(photosArray);
+      // Calculate the client width to display the appropriate row size
+      var containerWidth = this.photographyContainer.nativeElement.clientWidth;
+      var rows = this.calculateRowDimensions(containerWidth);
+      this.createSkeletonElements();
+      this.resizeAndPositionElements(rows);     
     });
-    this.innerWidth = window.innerWidth - 14;
+    this.photoElements = [];
   }
-
-  private calculateAndDisplayRows(photoList: any) {
-    var photoObservables = photoList.map(photoInfo => 
-      this.photoService.getPhotoSizesObservable(photoInfo.id))
-    
-    forkJoin(photoObservables).subscribe((data: any) => {
-      var photoDimensions = data.map(element => element.sizes.size);
-      var rows = this.calculateSizes(photoDimensions);
-      var photoElements = this.createPlaceholders(rows);
-      this.insertImages(photoElements, photoDimensions);
-    });
-  }
-
-  // Given the photoDimensions that the flickr API delivers, calculate exact dimensions for each row.
-  private calculateSizes(photoDimensions) {
+  
+  // Returns an array of rows, where each row has height width and 
+  private calculateRowDimensions(containerWidth) {
       var rows = [];
-      var rowBuffer = {totalWidth: 0, photosInfo: []};
-      for (var index = 0; index < photoDimensions.length; index++) {
-        var originalSize = photoDimensions[index].find(size => size.label == "Original");
+      var rowBuffer = {photosInfo: [], width: 0, height: 0};
+      for (var photoId of this.photosOrder) {
+        var originalSize = this.photosMetadata[photoId].sizes.find(size => size.label == "Original");
         var ratio = originalSize.width / originalSize.height;
         var scaledBaseWidth = ratio * _BASE_ROW_HEIGHT;
-        rowBuffer.totalWidth += scaledBaseWidth;
-        rowBuffer.photosInfo.push({"index": index, "width": scaledBaseWidth}); 
-        if (rowBuffer.totalWidth >= this.innerWidth) {
-          rows.push(this.normalizeRowDimensions(rowBuffer));
-          rowBuffer = {totalWidth: 0, photosInfo: []};
+        rowBuffer.width += scaledBaseWidth;
+        rowBuffer.photosInfo.push({"id": this.photosMetadata[photoId].id, "width": scaledBaseWidth}); 
+        // Row is ready, rescale and ship
+        if (rowBuffer.width >= containerWidth) {
+          var scaleRatio = rowBuffer.width / containerWidth;
+          rowBuffer.width = containerWidth;
+          rowBuffer.height = _BASE_ROW_HEIGHT / scaleRatio;
+          for (var photoInfo of rowBuffer.photosInfo) {
+            photoInfo.width /= scaleRatio;
+          }
+          rows.push(rowBuffer);
+          rowBuffer = {photosInfo: [], width: 0, height: 0};
         }
       }
     return rows;
   }
 
-  // Given the sizes of each row and element, create DOM divs with the appropriate sizes.
-  private createPlaceholders(rows) {
-    var container = this.photographyContainer.nativeElement;
-    var photoElements = []
+  private createSkeletonElements() {
+    for (var photoId of this.photosOrder) {
+      var photoElement = document.createElement("div");
+      photoElement.className = "photo";
+      var photoImgElement = document.createElement("img");
+      photoImgElement.src = this.photosMetadata[photoId].sizes.find(size => size.label == "Medium 640").source;
+      photoImgElement.style.maxHeight = "100%";
+      photoElement.appendChild(photoImgElement);
+      this.photoElements.push(photoElement);     
+      this.photographyContainer.nativeElement.appendChild(photoElement);
+    }
+  }
+
+  private resizeAndPositionElements(rows) {
+    var currentTop = 0;
+    var index = 0;
     for (var row of rows) {
-      var rowElement = document.createElement("div");
-      rowElement.style.display = "flex";
-      for (var photoInfo of row.photosInfo){
-        var photoElement = document.createElement("div");
-        photoElement.style.backgroundColor = "#333";
-        photoElement.style.height = row.height.toString() + "px";
-        photoElement.style.width = photoInfo.width.toString() + "px";
-        photoElements.push({width: photoInfo.width, height: row.height, ref: photoElement});
-        rowElement.appendChild(photoElement);
+      var currentLeft = 0;
+      for (var photoInfo of row.photosInfo) {
+        this.photoElements[index].setAttribute("style", `
+          height: ${row.height}px;
+          width: ${photoInfo.width}px;
+          top: ${currentTop}px;
+          left: ${currentLeft}px;
+        `);
+        index++;
+        currentLeft += photoInfo.width;
       }
-      container.appendChild(rowElement);
-    }
-    return photoElements;
-  }
-
-  // Find the smallest size that's larger than the element, and create an img with the appropriate src.
-  private insertImages(photoElements, photoDimensions) {
-    for (var index = 0; index < photoElements.length; index++) {
-      var minSize = photoDimensions[index].find(size => size.width >= photoElements[index].width && size.height >= photoElements[index].height);
-      console.log(minSize.source);
-      var photo = document.createElement("img");
-      photo.setAttribute("src", minSize.source);
-      photo.style.maxHeight = "100%";
-      photoElements[index].ref.appendChild(photo);
+      currentTop += row.height;
     }
   }
+}
 
-  private normalizeRowDimensions(row) {
-    var scaleRatio = row.totalWidth / this.innerWidth;
-    row.totalWidth = this.innerWidth;
-    row.height = _BASE_ROW_HEIGHT / scaleRatio;
-    return row;
+function shuffleInPlace(array) {
+  if (array.length <= 1) return array;
+  for (let i = 0; i < array.length; i++) {
+    var randomChoiceIndex = Math.floor(Math.random() * array.length);
+    [array[i], array[randomChoiceIndex]] = [array[randomChoiceIndex], array[i]];
   }
+  return array;
+}
 
+function indexedById(photosArray) {
+  function f (object, element) {
+    object[element.id] = element; 
+    return object;
+  }
+  return photosArray.reduce(f, {});
 }

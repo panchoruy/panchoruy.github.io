@@ -22,3 +22,30 @@ ul {
   color: #FFFFFF;
   font-family: "Roboto", sans-serif;
  }
+
+body {
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+}
+
+.photo {
+  position: absolute;
+  transition: all 0.5s ease;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeHolderShimmer;
+  animation-timing-function: linear;
+  background: #000;
+  background: linear-gradient(to right, #111 8%, #333 18%, #111 33%);
+  background-size: 800px 1px;
+}
+
+@keyframes placeHolderShimmer{
+    0%{
+        background-position: -400px 0
+    }
+    100%{
+        background-position: 400px 0
+    }
+}

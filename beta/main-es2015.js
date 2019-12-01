@@ -110,7 +110,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-home-button></app-home-button>\n<div #photographyContainer></div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-home-button></app-home-button>\n<div #photographyContainer id=\"photography-container\"></div>");
 
 /***/ }),
 
@@ -759,6 +759,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+
 
 
 
@@ -768,13 +770,29 @@ let PhotoService = class PhotoService {
     constructor(http) {
         this.http = http;
     }
+    // Returns a photo list with sizes
+    getPhotoMetadataByTagsObservable(tags = "website", user_id = "panchoruy", api_key = API_KEY) {
+        var base_url = "https://www.flickr.com/services/rest/?method=flickr.photos.search";
+        var request_url = `${base_url}&api_key=${api_key}&user_id=${user_id}&tags=${tags}&${JSON_ARGS}&extras=tags`;
+        var requestObservable = this.http.get(request_url);
+        var photosMetadataSubscriber = (observer => requestObservable.subscribe((data) => {
+            var photosArray = data.photos.photo;
+            var photoSizesObservables = photosArray.map(photoMetadata => this.getPhotoSizesObservable(photoMetadata.id));
+            // forkJoin allows to wait for all requests to be completed.
+            Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["forkJoin"])(photoSizesObservables).subscribe((data) => {
+                var photoSizes = data.map(element => element.sizes.size);
+                // forkJoin should return the results in order.
+                for (var index = 0; index < photoSizes.length; index++) {
+                    photosArray[index].sizes = photoSizes[index];
+                }
+                observer.next(photosArray);
+                observer.complete();
+            });
+        }));
+        return new rxjs__WEBPACK_IMPORTED_MODULE_3__["Observable"](photosMetadataSubscriber);
+    }
     getPhotoSizesObservable(photo_id, api_key = API_KEY) {
         var request_url = `https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${api_key}&photo_id=${photo_id}&${JSON_ARGS}`;
-        return this.http.get(request_url);
-    }
-    getPhotoListByTagsObservable(tags = "website", user_id = "panchoruy", api_key = API_KEY) {
-        var base_url = "https://www.flickr.com/services/rest/?method=flickr.photos.search";
-        var request_url = `${base_url}&api_key=${api_key}&user_id=${user_id}&tags=${tags}&${JSON_ARGS}`;
         return this.http.get(request_url);
     }
 };
@@ -798,7 +816,7 @@ PhotoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".photo {\n  max-height: 400px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3BhbmNoby9wcm9qZWN0cy9wYW5jaG9ydXkuZ2l0aHViLmlvL3BhbmNob3J1eS13ZWJzaXRlL3NyYy9hcHAvcGhvdG9ncmFwaHkvcGhvdG9ncmFwaHkuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3Bob3RvZ3JhcGh5L3Bob3RvZ3JhcGh5LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsaUJBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL3Bob3RvZ3JhcGh5L3Bob3RvZ3JhcGh5LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLnBob3RvIHtcbiAgbWF4LWhlaWdodDogNDAwcHg7XG59IiwiLnBob3RvIHtcbiAgbWF4LWhlaWdodDogNDAwcHg7XG59Il19 */");
+/* harmony default export */ __webpack_exports__["default"] = ("#photography-container {\n  min-height: 101%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3BhbmNoby9wcm9qZWN0cy9wYW5jaG9ydXkuZ2l0aHViLmlvL3BhbmNob3J1eS13ZWJzaXRlL3NyYy9hcHAvcGhvdG9ncmFwaHkvcGhvdG9ncmFwaHkuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3Bob3RvZ3JhcGh5L3Bob3RvZ3JhcGh5LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZ0JBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL3Bob3RvZ3JhcGh5L3Bob3RvZ3JhcGh5LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiI3Bob3RvZ3JhcGh5LWNvbnRhaW5lciB7XG4gIG1pbi1oZWlnaHQ6IDEwMSU7XG59IiwiI3Bob3RvZ3JhcGh5LWNvbnRhaW5lciB7XG4gIG1pbi1oZWlnaHQ6IDEwMSU7XG59Il19 */");
 
 /***/ }),
 
@@ -815,8 +833,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _photo_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../photo.service */ "./src/app/photo.service.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-
 
 
 
@@ -825,73 +841,78 @@ let PhotographyComponent = class PhotographyComponent {
     constructor(photoService) {
         this.photoService = photoService;
     }
+    // Dictionary of photo metadata indexed by id
+    onResize(event) {
+        var containerWidth = this.photographyContainer.nativeElement.clientWidth;
+        var rows = this.calculateRowDimensions(containerWidth);
+        this.resizeAndPositionElements(rows);
+    }
     ngOnInit() {
-        this.photoService.getPhotoListByTagsObservable().subscribe((data) => {
-            this.calculateAndDisplayRows(data.photos.photo);
+        this.photoService.getPhotoMetadataByTagsObservable().subscribe((photosArray) => {
+            // Store metadata indexed by id in memory, so that we can find sources faster
+            this.photosOrder = shuffleInPlace(photosArray.map(element => element.id));
+            this.photosMetadata = indexedById(photosArray);
+            // Calculate the client width to display the appropriate row size
+            var containerWidth = this.photographyContainer.nativeElement.clientWidth;
+            var rows = this.calculateRowDimensions(containerWidth);
+            this.createSkeletonElements();
+            this.resizeAndPositionElements(rows);
         });
-        this.innerWidth = window.innerWidth - 14;
+        this.photoElements = [];
     }
-    calculateAndDisplayRows(photoList) {
-        var photoObservables = photoList.map(photoInfo => this.photoService.getPhotoSizesObservable(photoInfo.id));
-        Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["forkJoin"])(photoObservables).subscribe((data) => {
-            var photoDimensions = data.map(element => element.sizes.size);
-            var rows = this.calculateSizes(photoDimensions);
-            var photoElements = this.createPlaceholders(rows);
-            this.insertImages(photoElements, photoDimensions);
-        });
-    }
-    // Given the photoDimensions that the flickr API delivers, calculate exact dimensions for each row.
-    calculateSizes(photoDimensions) {
+    // Returns an array of rows, where each row has height width and 
+    calculateRowDimensions(containerWidth) {
         var rows = [];
-        var rowBuffer = { totalWidth: 0, photosInfo: [] };
-        for (var index = 0; index < photoDimensions.length; index++) {
-            var originalSize = photoDimensions[index].find(size => size.label == "Original");
+        var rowBuffer = { photosInfo: [], width: 0, height: 0 };
+        for (var photoId of this.photosOrder) {
+            var originalSize = this.photosMetadata[photoId].sizes.find(size => size.label == "Original");
             var ratio = originalSize.width / originalSize.height;
             var scaledBaseWidth = ratio * _BASE_ROW_HEIGHT;
-            rowBuffer.totalWidth += scaledBaseWidth;
-            rowBuffer.photosInfo.push({ "index": index, "width": scaledBaseWidth });
-            if (rowBuffer.totalWidth >= this.innerWidth) {
-                rows.push(this.normalizeRowDimensions(rowBuffer));
-                rowBuffer = { totalWidth: 0, photosInfo: [] };
+            rowBuffer.width += scaledBaseWidth;
+            rowBuffer.photosInfo.push({ "id": this.photosMetadata[photoId].id, "width": scaledBaseWidth });
+            // Row is ready, rescale and ship
+            if (rowBuffer.width >= containerWidth) {
+                var scaleRatio = rowBuffer.width / containerWidth;
+                rowBuffer.width = containerWidth;
+                rowBuffer.height = _BASE_ROW_HEIGHT / scaleRatio;
+                for (var photoInfo of rowBuffer.photosInfo) {
+                    photoInfo.width /= scaleRatio;
+                }
+                rows.push(rowBuffer);
+                rowBuffer = { photosInfo: [], width: 0, height: 0 };
             }
         }
         return rows;
     }
-    // Given the sizes of each row and element, create DOM divs with the appropriate sizes.
-    createPlaceholders(rows) {
-        var container = this.photographyContainer.nativeElement;
-        var photoElements = [];
+    createSkeletonElements() {
+        for (var photoId of this.photosOrder) {
+            var photoElement = document.createElement("div");
+            photoElement.className = "photo";
+            var photoImgElement = document.createElement("img");
+            photoImgElement.src = this.photosMetadata[photoId].sizes.find(size => size.label == "Medium 640").source;
+            photoImgElement.style.maxHeight = "100%";
+            photoElement.appendChild(photoImgElement);
+            this.photoElements.push(photoElement);
+            this.photographyContainer.nativeElement.appendChild(photoElement);
+        }
+    }
+    resizeAndPositionElements(rows) {
+        var currentTop = 0;
+        var index = 0;
         for (var row of rows) {
-            var rowElement = document.createElement("div");
-            rowElement.style.display = "flex";
+            var currentLeft = 0;
             for (var photoInfo of row.photosInfo) {
-                var photoElement = document.createElement("div");
-                photoElement.style.backgroundColor = "#333";
-                photoElement.style.height = row.height.toString() + "px";
-                photoElement.style.width = photoInfo.width.toString() + "px";
-                photoElements.push({ width: photoInfo.width, height: row.height, ref: photoElement });
-                rowElement.appendChild(photoElement);
+                this.photoElements[index].setAttribute("style", `
+          height: ${row.height}px;
+          width: ${photoInfo.width}px;
+          top: ${currentTop}px;
+          left: ${currentLeft}px;
+        `);
+                index++;
+                currentLeft += photoInfo.width;
             }
-            container.appendChild(rowElement);
+            currentTop += row.height;
         }
-        return photoElements;
-    }
-    // Find the smallest size that's larger than the element, and create an img with the appropriate src.
-    insertImages(photoElements, photoDimensions) {
-        for (var index = 0; index < photoElements.length; index++) {
-            var minSize = photoDimensions[index].find(size => size.width >= photoElements[index].width && size.height >= photoElements[index].height);
-            console.log(minSize.source);
-            var photo = document.createElement("img");
-            photo.setAttribute("src", minSize.source);
-            photo.style.maxHeight = "100%";
-            photoElements[index].ref.appendChild(photo);
-        }
-    }
-    normalizeRowDimensions(row) {
-        var scaleRatio = row.totalWidth / this.innerWidth;
-        row.totalWidth = this.innerWidth;
-        row.height = _BASE_ROW_HEIGHT / scaleRatio;
-        return row;
     }
 };
 PhotographyComponent.ctorParameters = () => [
@@ -900,6 +921,9 @@ PhotographyComponent.ctorParameters = () => [
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('photographyContainer', { static: false })
 ], PhotographyComponent.prototype, "photographyContainer", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('window:resize', ['$event'])
+], PhotographyComponent.prototype, "onResize", null);
 PhotographyComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-photography',
@@ -908,6 +932,22 @@ PhotographyComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     })
 ], PhotographyComponent);
 
+function shuffleInPlace(array) {
+    if (array.length <= 1)
+        return array;
+    for (let i = 0; i < array.length; i++) {
+        var randomChoiceIndex = Math.floor(Math.random() * array.length);
+        [array[i], array[randomChoiceIndex]] = [array[randomChoiceIndex], array[i]];
+    }
+    return array;
+}
+function indexedById(photosArray) {
+    function f(object, element) {
+        object[element.id] = element;
+        return object;
+    }
+    return photosArray.reduce(f, {});
+}
 
 
 /***/ }),
