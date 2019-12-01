@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { PhotoService } from './../photo.service';
 
-const _BASE_ROW_HEIGHT = 400
+const _BASE_ROW_HEIGHT = 400;
+const _PHOTO_SPACING = 5;
 
 @Component({
   selector: 'app-photography',
@@ -9,7 +10,7 @@ const _BASE_ROW_HEIGHT = 400
   styleUrls: ['./photography.component.scss']
 })
 export class PhotographyComponent implements OnInit {
-  @ViewChild('photographyContainer', {static: false}) 
+  @ViewChild('photographyContainer', { static: false })
   private photographyContainer: ElementRef;
   // Dictionary of photo metadata indexed by id
   @HostListener('window:resize', ['$event'])
@@ -37,33 +38,39 @@ export class PhotographyComponent implements OnInit {
       var containerWidth = this.photographyContainer.nativeElement.clientWidth;
       var rows = this.calculateRowDimensions(containerWidth);
       this.createSkeletonElements();
-      this.resizeAndPositionElements(rows);     
+      this.resizeAndPositionElements(rows);
     });
     this.photoElements = [];
   }
-  
+
   // Returns an array of rows, where each row has height width and 
   private calculateRowDimensions(containerWidth) {
-      var rows = [];
-      var rowBuffer = {photosInfo: [], width: 0, height: 0};
-      for (var photoId of this.photosOrder) {
-        var originalSize = this.photosMetadata[photoId].sizes.find(size => size.label == "Original");
-        var ratio = originalSize.width / originalSize.height;
-        var scaledBaseWidth = ratio * _BASE_ROW_HEIGHT;
-        rowBuffer.width += scaledBaseWidth;
-        rowBuffer.photosInfo.push({"id": this.photosMetadata[photoId].id, "width": scaledBaseWidth}); 
-        // Row is ready, rescale and ship
-        if (rowBuffer.width >= containerWidth) {
-          var scaleRatio = rowBuffer.width / containerWidth;
-          rowBuffer.width = containerWidth;
-          rowBuffer.height = _BASE_ROW_HEIGHT / scaleRatio;
-          for (var photoInfo of rowBuffer.photosInfo) {
-            photoInfo.width /= scaleRatio;
-          }
-          rows.push(rowBuffer);
-          rowBuffer = {photosInfo: [], width: 0, height: 0};
+    var rows = [];
+    var rowBuffer = { photosInfo: [], width: 0, height: 0 };
+    for (var photoId of this.photosOrder) {
+      var originalSize = this.photosMetadata[photoId].sizes.find(size => size.label == "Original");
+      var ratio = originalSize.width / originalSize.height;
+      var scaledBaseWidth = ratio * _BASE_ROW_HEIGHT;
+      rowBuffer.width += scaledBaseWidth;
+      rowBuffer.photosInfo.push({ "id": this.photosMetadata[photoId].id, "width": scaledBaseWidth });
+      // Row is ready, rescale and ship
+      if (rowBuffer.width >= containerWidth) {
+        var spacesWidth = (rowBuffer.photosInfo.length - 1) * _PHOTO_SPACING;
+        var scaleRatio = rowBuffer.width / (containerWidth - spacesWidth);
+        rowBuffer.width = containerWidth;
+        rowBuffer.height = _BASE_ROW_HEIGHT / scaleRatio;
+        for (var photoInfo of rowBuffer.photosInfo) {
+          photoInfo.width /= scaleRatio;
         }
+        rows.push(rowBuffer);
+        rowBuffer = { photosInfo: [], width: 0, height: 0 };
       }
+    }
+    // Last row not complete
+    if (rowBuffer.width > 0) {
+      rowBuffer.height = _BASE_ROW_HEIGHT;
+      rows.push(rowBuffer);
+    }
     return rows;
   }
 
@@ -75,7 +82,7 @@ export class PhotographyComponent implements OnInit {
       photoImgElement.src = this.photosMetadata[photoId].sizes.find(size => size.label == "Medium 640").source;
       photoImgElement.style.maxHeight = "100%";
       photoElement.appendChild(photoImgElement);
-      this.photoElements.push(photoElement);     
+      this.photoElements.push(photoElement);
       this.photographyContainer.nativeElement.appendChild(photoElement);
     }
   }
@@ -94,8 +101,10 @@ export class PhotographyComponent implements OnInit {
         `);
         index++;
         currentLeft += photoInfo.width;
+        currentLeft += _PHOTO_SPACING;
       }
       currentTop += row.height;
+      currentTop += _PHOTO_SPACING;
     }
   }
 }
@@ -110,8 +119,8 @@ function shuffleInPlace(array) {
 }
 
 function indexedById(photosArray) {
-  function f (object, element) {
-    object[element.id] = element; 
+  function f(object, element) {
+    object[element.id] = element;
     return object;
   }
   return photosArray.reduce(f, {});

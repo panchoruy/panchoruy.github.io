@@ -837,6 +837,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const _BASE_ROW_HEIGHT = 400;
+const _PHOTO_SPACING = 5;
 let PhotographyComponent = class PhotographyComponent {
     constructor(photoService) {
         this.photoService = photoService;
@@ -872,7 +873,8 @@ let PhotographyComponent = class PhotographyComponent {
             rowBuffer.photosInfo.push({ "id": this.photosMetadata[photoId].id, "width": scaledBaseWidth });
             // Row is ready, rescale and ship
             if (rowBuffer.width >= containerWidth) {
-                var scaleRatio = rowBuffer.width / containerWidth;
+                var spacesWidth = (rowBuffer.photosInfo.length - 1) * _PHOTO_SPACING;
+                var scaleRatio = rowBuffer.width / (containerWidth - spacesWidth);
                 rowBuffer.width = containerWidth;
                 rowBuffer.height = _BASE_ROW_HEIGHT / scaleRatio;
                 for (var photoInfo of rowBuffer.photosInfo) {
@@ -881,6 +883,11 @@ let PhotographyComponent = class PhotographyComponent {
                 rows.push(rowBuffer);
                 rowBuffer = { photosInfo: [], width: 0, height: 0 };
             }
+        }
+        // Last row not complete
+        if (rowBuffer.width > 0) {
+            rowBuffer.height = _BASE_ROW_HEIGHT;
+            rows.push(rowBuffer);
         }
         return rows;
     }
@@ -910,8 +917,10 @@ let PhotographyComponent = class PhotographyComponent {
         `);
                 index++;
                 currentLeft += photoInfo.width;
+                currentLeft += _PHOTO_SPACING;
             }
             currentTop += row.height;
+            currentTop += _PHOTO_SPACING;
         }
     }
 };

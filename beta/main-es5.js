@@ -844,6 +844,7 @@ var __read = (this && this.__read) || function (o, n) {
             /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
             /* harmony import */ var _photo_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../photo.service */ "./src/app/photo.service.ts");
             var _BASE_ROW_HEIGHT = 400;
+            var _PHOTO_SPACING = 5;
             var PhotographyComponent = /** @class */ (function () {
                 function PhotographyComponent(photoService) {
                     this.photoService = photoService;
@@ -883,7 +884,8 @@ var __read = (this && this.__read) || function (o, n) {
                             rowBuffer.photosInfo.push({ "id": this.photosMetadata[photoId].id, "width": scaledBaseWidth });
                             // Row is ready, rescale and ship
                             if (rowBuffer.width >= containerWidth) {
-                                var scaleRatio = rowBuffer.width / containerWidth;
+                                var spacesWidth = (rowBuffer.photosInfo.length - 1) * _PHOTO_SPACING;
+                                var scaleRatio = rowBuffer.width / (containerWidth - spacesWidth);
                                 rowBuffer.width = containerWidth;
                                 rowBuffer.height = _BASE_ROW_HEIGHT / scaleRatio;
                                 try {
@@ -910,6 +912,11 @@ var __read = (this && this.__read) || function (o, n) {
                             if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
                         }
                         finally { if (e_1) throw e_1.error; }
+                    }
+                    // Last row not complete
+                    if (rowBuffer.width > 0) {
+                        rowBuffer.height = _BASE_ROW_HEIGHT;
+                        rows.push(rowBuffer);
                     }
                     return rows;
                 };
@@ -950,6 +957,7 @@ var __read = (this && this.__read) || function (o, n) {
                                     this.photoElements[index].setAttribute("style", "\n          height: " + row.height + "px;\n          width: " + photoInfo.width + "px;\n          top: " + currentTop + "px;\n          left: " + currentLeft + "px;\n        ");
                                     index++;
                                     currentLeft += photoInfo.width;
+                                    currentLeft += _PHOTO_SPACING;
                                 }
                             }
                             catch (e_5_1) { e_5 = { error: e_5_1 }; }
@@ -960,6 +968,7 @@ var __read = (this && this.__read) || function (o, n) {
                                 finally { if (e_5) throw e_5.error; }
                             }
                             currentTop += row.height;
+                            currentTop += _PHOTO_SPACING;
                         }
                     }
                     catch (e_4_1) { e_4 = { error: e_4_1 }; }
