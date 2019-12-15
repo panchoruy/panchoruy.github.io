@@ -76,14 +76,11 @@ export class PhotographyComponent implements OnInit {
 
   private createSkeletonElements() {
     for (var photoId of this.photosOrder) {
-      var photoElement = document.createElement("div");
-      photoElement.className = "photo";
-      var photoImgElement = document.createElement("img");
-      photoImgElement.src = this.photosMetadata[photoId].sizes.find(size => size.label == "Medium 640").source;
-      photoImgElement.style.maxHeight = "100%";
-      photoElement.appendChild(photoImgElement);
+      var photoElement = {
+        src: this.photosMetadata[photoId].sizes.find(size => size.label == "Medium 640").source,
+        srcOriginal: this.photosMetadata[photoId].sizes.find(size => size.label == "Original").source,
+      };
       this.photoElements.push(photoElement);
-      this.photographyContainer.nativeElement.appendChild(photoElement);
     }
   }
 
@@ -93,12 +90,10 @@ export class PhotographyComponent implements OnInit {
     for (var row of rows) {
       var currentLeft = 0;
       for (var photoInfo of row.photosInfo) {
-        this.photoElements[index].setAttribute("style", `
-          height: ${row.height}px;
-          width: ${photoInfo.width}px;
-          top: ${currentTop}px;
-          left: ${currentLeft}px;
-        `);
+        this.photoElements[index].height = `${row.height}px`;
+        this.photoElements[index].width = `${photoInfo.width}px`;
+        this.photoElements[index].top = `${currentTop}px`;
+        this.photoElements[index].left = `${currentLeft}px`;
         index++;
         currentLeft += photoInfo.width;
         currentLeft += _PHOTO_SPACING;
@@ -106,6 +101,10 @@ export class PhotographyComponent implements OnInit {
       currentTop += row.height;
       currentTop += _PHOTO_SPACING;
     }
+  }
+
+  private openFullscreen(event) {
+    console.log(event);
   }
 }
 

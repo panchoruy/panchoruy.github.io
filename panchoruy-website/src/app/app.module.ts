@@ -15,6 +15,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { AboutComponent } from './about/about.component';
 // Providers
 import { PhotoService } from './photo.service';
+import { PhotoComponent } from './photo/photo.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { PhotoService } from './photo.service';
     HomeButtonComponent,
     ProjectsComponent,
     PageNotFoundComponent,
-    AboutComponent
+    AboutComponent,
+    PhotoComponent
   ],
   imports: [
     BrowserModule,

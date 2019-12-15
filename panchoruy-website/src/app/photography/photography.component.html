@@ -1,2 +1,12 @@
 <app-home-button></app-home-button>
-<div #photographyContainer id="photography-container"></div>
+<div #photographyContainer id="photography-container">
+  <app-photo 
+    *ngFor="let photoElement of photoElements"
+    class="photo"
+    [src]="photoElement.src"
+    [srcOriginal]="photoElement.srcOriginal"
+    [height]="photoElement.height"
+    [width]="photoElement.width"
+    [top]="photoElement.top"
+    [left]="photoElement.left"></app-photo>
+</div>

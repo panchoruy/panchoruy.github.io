@@ -1,0 +1,14 @@
+.photo-image {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.fullscreen-theater {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.9);
+  z-index: 5;
+}

@@ -101,6 +101,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/photo/photo.component.html":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/photo/photo.component.html ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<img class=\"photo-image\" [src]=\"src\"/>\n<div *ngIf=\"isFullscreen\" class=\"fullscreen-theater\">\n  <img class=\"photo-image center-self\" [src]=\"srcOriginal\"/>\n</div>");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/photography/photography.component.html":
 /*!**********************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/photography/photography.component.html ***!
@@ -110,7 +123,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<app-home-button></app-home-button>\n<div #photographyContainer id=\"photography-container\"></div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-home-button></app-home-button>\n<div #photographyContainer id=\"photography-container\">\n  <app-photo \n    *ngFor=\"let photoElement of photoElements\"\n    class=\"photo\"\n    [src]=\"photoElement.src\"\n    [srcOriginal]=\"photoElement.srcOriginal\"\n    [height]=\"photoElement.height\"\n    [width]=\"photoElement.width\"\n    [top]=\"photoElement.top\"\n    [left]=\"photoElement.left\"></app-photo>\n</div>");
 
 /***/ }),
 
@@ -515,6 +528,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./page-not-found/page-not-found.component */ "./src/app/page-not-found/page-not-found.component.ts");
 /* harmony import */ var _about_about_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./about/about.component */ "./src/app/about/about.component.ts");
 /* harmony import */ var _photo_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./photo.service */ "./src/app/photo.service.ts");
+/* harmony import */ var _photo_photo_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./photo/photo.component */ "./src/app/photo/photo.component.ts");
 
 // Imports
 
@@ -533,6 +547,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // Providers
 
+
 let AppModule = class AppModule {
 };
 AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -545,7 +560,8 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _home_button_home_button_component__WEBPACK_IMPORTED_MODULE_10__["HomeButtonComponent"],
             _projects_projects_component__WEBPACK_IMPORTED_MODULE_11__["ProjectsComponent"],
             _page_not_found_page_not_found_component__WEBPACK_IMPORTED_MODULE_12__["PageNotFoundComponent"],
-            _about_about_component__WEBPACK_IMPORTED_MODULE_13__["AboutComponent"]
+            _about_about_component__WEBPACK_IMPORTED_MODULE_13__["AboutComponent"],
+            _photo_photo_component__WEBPACK_IMPORTED_MODULE_15__["PhotoComponent"]
         ],
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -807,6 +823,79 @@ PhotoService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/photo/photo.component.scss":
+/*!********************************************!*\
+  !*** ./src/app/photo/photo.component.scss ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = (".photo-image {\n  max-height: 100%;\n  max-width: 100%;\n}\n\n.fullscreen-theater {\n  position: fixed;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.9);\n  z-index: 5;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9ob21lL3BhbmNoby9wcm9qZWN0cy9wYW5jaG9ydXkuZ2l0aHViLmlvL3BhbmNob3J1eS13ZWJzaXRlL3NyYy9hcHAvcGhvdG8vcGhvdG8uY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL3Bob3RvL3Bob3RvLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZ0JBQUE7RUFDQSxlQUFBO0FDQ0Y7O0FERUE7RUFDRSxlQUFBO0VBQ0EsTUFBQTtFQUNBLE9BQUE7RUFDQSxZQUFBO0VBQ0EsV0FBQTtFQUNBLG9DQUFBO0VBQ0EsVUFBQTtBQ0NGIiwiZmlsZSI6InNyYy9hcHAvcGhvdG8vcGhvdG8uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIucGhvdG8taW1hZ2Uge1xuICBtYXgtaGVpZ2h0OiAxMDAlO1xuICBtYXgtd2lkdGg6IDEwMCU7XG59XG5cbi5mdWxsc2NyZWVuLXRoZWF0ZXIge1xuICBwb3NpdGlvbjogZml4ZWQ7XG4gIHRvcDogMDtcbiAgbGVmdDogMDtcbiAgaGVpZ2h0OiAxMDAlO1xuICB3aWR0aDogMTAwJTtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgwLDAsMCwwLjkpO1xuICB6LWluZGV4OiA1O1xufSIsIi5waG90by1pbWFnZSB7XG4gIG1heC1oZWlnaHQ6IDEwMCU7XG4gIG1heC13aWR0aDogMTAwJTtcbn1cblxuLmZ1bGxzY3JlZW4tdGhlYXRlciB7XG4gIHBvc2l0aW9uOiBmaXhlZDtcbiAgdG9wOiAwO1xuICBsZWZ0OiAwO1xuICBoZWlnaHQ6IDEwMCU7XG4gIHdpZHRoOiAxMDAlO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiByZ2JhKDAsIDAsIDAsIDAuOSk7XG4gIHotaW5kZXg6IDU7XG59Il19 */");
+
+/***/ }),
+
+/***/ "./src/app/photo/photo.component.ts":
+/*!******************************************!*\
+  !*** ./src/app/photo/photo.component.ts ***!
+  \******************************************/
+/*! exports provided: PhotoComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PhotoComponent", function() { return PhotoComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let PhotoComponent = class PhotoComponent {
+    constructor() { }
+    ngOnInit() {
+        this.isFullscreen = false;
+    }
+    onClick(button) {
+        this.isFullscreen = !this.isFullscreen;
+    }
+};
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PhotoComponent.prototype, "src", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PhotoComponent.prototype, "srcOriginal", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('style.height'),
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PhotoComponent.prototype, "height", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('style.width'),
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PhotoComponent.prototype, "width", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('style.top'),
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PhotoComponent.prototype, "top", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('style.left'),
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], PhotoComponent.prototype, "left", void 0);
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('click', ['$event.target'])
+], PhotoComponent.prototype, "onClick", null);
+PhotoComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-photo',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./photo.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/photo/photo.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./photo.component.scss */ "./src/app/photo/photo.component.scss")).default]
+    })
+], PhotoComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/photography/photography.component.scss":
 /*!********************************************************!*\
   !*** ./src/app/photography/photography.component.scss ***!
@@ -893,14 +982,11 @@ let PhotographyComponent = class PhotographyComponent {
     }
     createSkeletonElements() {
         for (var photoId of this.photosOrder) {
-            var photoElement = document.createElement("div");
-            photoElement.className = "photo";
-            var photoImgElement = document.createElement("img");
-            photoImgElement.src = this.photosMetadata[photoId].sizes.find(size => size.label == "Medium 640").source;
-            photoImgElement.style.maxHeight = "100%";
-            photoElement.appendChild(photoImgElement);
+            var photoElement = {
+                src: this.photosMetadata[photoId].sizes.find(size => size.label == "Medium 640").source,
+                srcOriginal: this.photosMetadata[photoId].sizes.find(size => size.label == "Original").source,
+            };
             this.photoElements.push(photoElement);
-            this.photographyContainer.nativeElement.appendChild(photoElement);
         }
     }
     resizeAndPositionElements(rows) {
@@ -909,12 +995,10 @@ let PhotographyComponent = class PhotographyComponent {
         for (var row of rows) {
             var currentLeft = 0;
             for (var photoInfo of row.photosInfo) {
-                this.photoElements[index].setAttribute("style", `
-          height: ${row.height}px;
-          width: ${photoInfo.width}px;
-          top: ${currentTop}px;
-          left: ${currentLeft}px;
-        `);
+                this.photoElements[index].height = `${row.height}px`;
+                this.photoElements[index].width = `${photoInfo.width}px`;
+                this.photoElements[index].top = `${currentTop}px`;
+                this.photoElements[index].left = `${currentLeft}px`;
                 index++;
                 currentLeft += photoInfo.width;
                 currentLeft += _PHOTO_SPACING;
@@ -922,6 +1006,9 @@ let PhotographyComponent = class PhotographyComponent {
             currentTop += row.height;
             currentTop += _PHOTO_SPACING;
         }
+    }
+    openFullscreen(event) {
+        console.log(event);
     }
 };
 PhotographyComponent.ctorParameters = () => [
