@@ -7,8 +7,7 @@ import { Component, OnInit, Input, Output, HostListener, HostBinding, ElementRef
 })
 export class PhotoComponent implements OnInit {
 
-  @Input() src: string;
-  @Input() srcOriginal: string;
+  @Input() sizes: any;
   @HostBinding('style.height') 
   @Input() height: string;
   @HostBinding('style.width') 
@@ -18,11 +17,15 @@ export class PhotoComponent implements OnInit {
   @HostBinding('style.left') 
   @Input() left: string;
 
+  currentSource : string;
   private isFullscreen : boolean;
   constructor() { }
 
   ngOnInit() {
     this.isFullscreen = false;
+    // Calculate source?
+    this.currentSource = this.sizes.find(size => size.label == "Medium 640").source;
+    console.log(this.sizes.find(size => size.label == "Medium 640").source);
   }
 
   @HostListener('click', ['$event.target'])

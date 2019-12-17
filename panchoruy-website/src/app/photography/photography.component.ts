@@ -77,8 +77,7 @@ export class PhotographyComponent implements OnInit {
   private createSkeletonElements() {
     for (var photoId of this.photosOrder) {
       var photoElement = {
-        src: this.photosMetadata[photoId].sizes.find(size => size.label == "Medium 640").source,
-        srcOriginal: this.photosMetadata[photoId].sizes.find(size => size.label == "Original").source,
+        sizes: this.photosMetadata[photoId].sizes
       };
       this.photoElements.push(photoElement);
     }
