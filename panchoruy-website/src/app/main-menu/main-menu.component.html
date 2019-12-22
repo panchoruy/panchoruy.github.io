@@ -1,7 +1,5 @@
-<ul class="center-text">
-  <ul>
-    <li *ngFor="let item of mainMenuItems;"> 
-      <a routerLink="/{{item | lowercase}}"> {{item}} </a>
-    </li>
-  </ul>
+<ul class="main-menu">
+  <li *ngFor="let item of mainMenuItems;"> 
+    <a routerLink="/{{item | lowercase}}"> {{item}} </a>
+  </li>
 </ul>

@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Angular Material Components
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 // Declarations
 import { AppRoutingModule } from './app-routing.module';
@@ -41,7 +42,8 @@ import { PhotoService } from './photo.service';
     AppRoutingModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatButtonModule
   ],
   providers: [
     PhotoService

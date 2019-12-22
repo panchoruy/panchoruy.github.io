@@ -1,4 +1,6 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto:100,400';
+@import 'contrast-dark-theme.scss';
+
 
 .center-self {
   position: absolute;
@@ -7,23 +9,24 @@
   transform: translate(-50%, -50%);
 }
 
-.center-text {
+.main-menu {
   text-align: center;
-}
-
-ul {
   list-style: none;
+  color: $light-primary-text;
+  padding: 0;
+  margin: 0;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  background-color: #000000;
-  color: #FFFFFF;
-  font-family: "Roboto", sans-serif;
- }
+ul.main-menu > li > a {
+  color: $light-primary-text;
+}
 
 body {
+  margin: 0;
+  padding: 0;
+  background-color: mat-color($contrast-dark-primary);
+  color: $light-primary-text;
+  font-family: "Roboto", sans-serif;
   overflow-y: scroll !important;
   overflow-x: hidden;
   height: 100%;
