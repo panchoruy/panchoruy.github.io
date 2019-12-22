@@ -3,8 +3,7 @@
   <app-photo 
     *ngFor="let photoElement of photoElements"
     class="photo"
-    [src]="photoElement.src"
-    [srcOriginal]="photoElement.srcOriginal"
+    [sizes]="photoElement.sizes"
     [height]="photoElement.height"
     [width]="photoElement.width"
     [top]="photoElement.top"
