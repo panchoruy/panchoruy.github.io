@@ -18,7 +18,7 @@ export class PhotoComponent implements OnInit {
   @Input() left: string;
 
   currentSource : string;
-  private isFullscreen : boolean;
+  isFullscreen : boolean;
   constructor() { }
 
   ngOnInit() {

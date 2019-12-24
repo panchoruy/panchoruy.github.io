@@ -25,7 +25,7 @@ export class PhotographyComponent implements OnInit {
   // Array of photoMetadata (in order of display).
   private photosOrder: any;
   // Array off all photoElements
-  private photoElements: any;
+  photoElements: any;
 
   constructor(private photoService: PhotoService) { }
 
