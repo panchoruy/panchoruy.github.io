@@ -17,9 +17,9 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "../beta",
+            "outputPath": "../built",
             "baseHref": "/",
-            "deployUrl": "/beta/",
+            "deployUrl": "/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
