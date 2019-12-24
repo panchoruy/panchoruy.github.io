@@ -23,14 +23,21 @@ export class PhotoComponent implements OnInit {
 
   ngOnInit() {
     this.isFullscreen = false;
-    // Calculate source?
+    // Source thats always bigger than the row size.
     this.currentSource = this.sizes.find(size => size.label == "Medium 640").source;
-    console.log(this.sizes.find(size => size.label == "Medium 640").source);
   }
 
   @HostListener('click', ['$event.target'])
   onClick(button) {
     this.isFullscreen = !this.isFullscreen;
+    if (this.isFullscreen) {
+      for (var size of this.sizes) {
+        if (size.width >= window.innerWidth || size.height >= window.innerHeight) {
+          this.currentSource = size.source;
+          break;
+        }
+      }
+    }
   }
 
 
