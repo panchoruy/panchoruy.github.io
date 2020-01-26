@@ -20,7 +20,6 @@
   font-variant: normal;
   text-transform: none;
   padding: 10px;
-  font-size: 30px;
   line-height: 1;
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
@@ -51,6 +50,14 @@ ul.main-menu > li > a {
 
 .center-text {
   text-align: center;
+}
+
+.social-icon {
+  @extend .unstyled-link;
+  font-size: 20px;
+  line-height: 50px;
+  width: 50px;
+  height: 50px;
 }
 
 .unstyled-link {
@@ -93,3 +100,8 @@ body {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+h1 {
+    font-weight: 100;
+    text-align: center;
+}
