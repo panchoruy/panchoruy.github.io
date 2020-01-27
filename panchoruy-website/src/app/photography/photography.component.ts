@@ -101,10 +101,6 @@ export class PhotographyComponent implements OnInit {
       currentTop += _PHOTO_SPACING;
     }
   }
-
-  private openFullscreen(event) {
-    console.log(event);
-  }
 }
 
 function shuffleInPlace(array) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, HostListener, HostBinding, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, HostListener, HostBinding, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-photo',
