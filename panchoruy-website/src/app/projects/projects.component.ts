@@ -9,7 +9,7 @@ export class ProjectsComponent implements OnInit {
   // Input State
   private inputState: object;
 
-  @ViewChild('svgCanvas', { static: false })
+  @ViewChild('svgCanvas')
   private svgCanvas: ElementRef;
 
   constructor() { }

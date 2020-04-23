@@ -10,7 +10,7 @@ const _PHOTO_SPACING = 5;
   styleUrls: ['./photography.component.scss']
 })
 export class PhotographyComponent implements OnInit {
-  @ViewChild('photographyContainer', { static: false })
+  @ViewChild('photographyContainer')
   private photographyContainer: ElementRef;
   // Dictionary of photo metadata indexed by id
   @HostListener('window:resize', ['$event'])
