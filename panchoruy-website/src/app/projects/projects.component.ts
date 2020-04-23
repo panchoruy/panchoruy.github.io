@@ -6,6 +6,9 @@ import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
+  // Input State
+  private inputState: object;
+
   @ViewChild('svgCanvas', { static: false })
   private svgCanvas: ElementRef;
 
@@ -14,18 +17,41 @@ export class ProjectsComponent implements OnInit {
   ngOnInit() {
   }
 
-  private handleClick(mouseEvent) {
-    if (mouseEvent.target.tagName == "svg"){
-      this.createCircle(mouseEvent.clientX, mouseEvent.clientY, 50, "#fff", 3, "#000");
+  // @HostListener('window:keydown', ['$event'])
+  // handleKeyDown(event: KeyboardEvent) {
+
+  // }
+
+  // @HostListener('window:keyup', ['$event'])
+  // handleKeyUp(event: KeyboardEvent) {
+
+  // }
+
+  private handleMouseDown(event) {
+    console.log(event);
+    if (event.target.classList.contains('svg-canvas')) {
+      console.log("SVG Clicked!");
+
     }
-    else if (mouseEvent.target.tagName == "circle") {
-      this.removeElement(mouseEvent.target);
-    }
+    // console.log("MouseDown!");
+    // console.log(event);
   }
 
-  private handleDrag(mouseEvent) {
-    console.log(mouseEvent);
+  private handleMouseOver(event) {
+    // console.log("MouseOver!");
+    // console.log(event);
   }
+
+  private handleMouseUp(event) {
+    // console.log("MouseUp!");
+    // console.log(event);
+  }
+
+  private handleMouseMove(event) {
+    // console.log("MouseMove!");
+    // console.log(event);
+  }
+
 
   private createCircle(x, y, r, s, sw, f){
     var newCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
@@ -42,4 +68,9 @@ export class ProjectsComponent implements OnInit {
     target.parentElement.removeChild(target);
   }
 
+}
+
+class InputState {
+  public mouseDown: boolean;
+  public shiftKeyDown: boolean;
 }
