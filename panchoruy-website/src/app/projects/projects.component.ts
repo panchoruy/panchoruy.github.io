@@ -19,38 +19,12 @@ export class ProjectsComponent implements OnInit {
     this.worldObjects = new Set;
   }
 
-  // @HostListener('window:keydown', ['$event'])
-  // handleKeyDown(event: KeyboardEvent) {
-
-  // }
-
-  // @HostListener('window:keyup', ['$event'])
-  // handleKeyUp(event: KeyboardEvent) {
-
-  // }
-
   handleMouseDown(event) {
+    console.log(event);
     if (event.target.classList.contains('svg-canvas')) {
       this.createCircle(event.clientX, event.clientY);
     }
-    else if (event.target.classList.contains('circle')) {
-      console.log(event.target);
-    }
   }
-
-  handleMouseOver(event) {
-  }
-
-  handleMouseUp(event) {
-    // console.log("MouseUp!");
-    // console.log(event);
-  }
-
-  handleMouseMove(event) {
-    // console.log("MouseMove!");
-    // console.log(event);
-  }
-
 
   private createCircle(posX: number, posY: number) {
     var newCircle = new CircleObject(posX, posY);
@@ -73,6 +47,8 @@ class CircleObject {
   svgElement: SVGCircleElement;
   clicked: boolean;
   hovered: boolean;
+  offsetX: number;
+  offsetY: number;
 
   constructor(
     posX: number,
@@ -115,6 +91,8 @@ class CircleObject {
   private handleMouseDown(ref) {
     return function(event) {
       ref.clicked = true;
+      ref.offsetX = ref.svgElement.getAttribute("cx") - event.clientX
+      ref.offsetY = ref.svgElement.getAttribute("cy") - event.clientY
       var parent = ref.svgElement.parentElement
       parent.addEventListener('mousemove', ref.handleMouseMove(ref))
       ref.updateColor();
@@ -133,8 +111,8 @@ class CircleObject {
   private handleMouseMove(ref) {
     return function(event) {
       if (ref.clicked) {
-        ref.svgElement.setAttribute("cx", event.clientX);
-        ref.svgElement.setAttribute("cy", event.clientY);
+        ref.svgElement.setAttribute("cx", event.clientX + ref.offsetX);
+        ref.svgElement.setAttribute("cy", event.clientY + ref.offsetY);
       }
     }
   }
