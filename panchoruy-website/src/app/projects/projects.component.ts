@@ -8,6 +8,7 @@ import { Component, OnInit, HostListener, ElementRef, ViewChild } from '@angular
 export class ProjectsComponent implements OnInit {
   // Input State
   private inputState: object;
+  private worldObjects: Set<any>;
 
   @ViewChild('svgCanvas')
   private svgCanvas: ElementRef;
@@ -15,6 +16,7 @@ export class ProjectsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.worldObjects = new Set;
   }
 
   // @HostListener('window:keydown', ['$event'])
@@ -27,41 +29,33 @@ export class ProjectsComponent implements OnInit {
 
   // }
 
-  private handleMouseDown(event) {
-    console.log(event);
+  handleMouseDown(event) {
     if (event.target.classList.contains('svg-canvas')) {
-      console.log("SVG Clicked!");
-
+      this.createCircle(event.clientX, event.clientY);
     }
-    // console.log("MouseDown!");
-    // console.log(event);
+    else if (event.target.classList.contains('circle')) {
+      console.log(event.target);
+    }
   }
 
-  private handleMouseOver(event) {
-    // console.log("MouseOver!");
-    // console.log(event);
+  handleMouseOver(event) {
   }
 
-  private handleMouseUp(event) {
+  handleMouseUp(event) {
     // console.log("MouseUp!");
     // console.log(event);
   }
 
-  private handleMouseMove(event) {
+  handleMouseMove(event) {
     // console.log("MouseMove!");
     // console.log(event);
   }
 
 
-  private createCircle(x, y, r, s, sw, f){
-    var newCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    newCircle.setAttribute("cx", String(x));
-    newCircle.setAttribute("cy", String(y));
-    newCircle.setAttribute("r", String(r));
-    newCircle.setAttribute("stroke", s);
-    newCircle.setAttribute("stroke-width", String(sw));
-    newCircle.setAttribute("fill", f);
-    this.svgCanvas.nativeElement.appendChild(newCircle);
+  private createCircle(posX: number, posY: number) {
+    var newCircle = new CircleObject(posX, posY);
+    this.worldObjects.add(newCircle.svgElement);
+    this.svgCanvas.nativeElement.appendChild(newCircle.svgElement);
   }
 
   private removeElement(target) {
@@ -73,4 +67,89 @@ export class ProjectsComponent implements OnInit {
 class InputState {
   public mouseDown: boolean;
   public shiftKeyDown: boolean;
+}
+
+class CircleObject {
+  svgElement: SVGCircleElement;
+  clicked: boolean;
+  hovered: boolean;
+
+  constructor(
+    posX: number,
+    posY: number,
+    radius: number = 50,
+    stroke: string = '#FFF',
+    strokeFocus: string = '#55F',
+    strokeWidth: string = '2px',
+    fill: string = '#000') {
+    this.clicked = false;
+    this.hovered = false;
+    this.svgElement = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    this.svgElement.classList.add('circle');
+    this.svgElement.setAttribute("cx", String(posX));
+    this.svgElement.setAttribute("cy", String(posY));
+    this.svgElement.setAttribute("r", String(radius));
+    this.svgElement.setAttribute("stroke", stroke);
+    this.svgElement.setAttribute("stroke-width", String(strokeWidth));
+    this.svgElement.setAttribute("fill", fill);
+    this.svgElement.addEventListener('mouseenter', this.handleMouseEnter(this))
+    this.svgElement.addEventListener('mouseleave', this.handleMouseLeave(this))
+    this.svgElement.addEventListener('mousedown', this.handleMouseDown(this))
+    this.svgElement.addEventListener('mouseup', this.handleMouseUp(this))
+  }
+
+  private handleMouseEnter(ref) {
+    return function(event) {
+      ref.hovered = true;
+      ref.updateColor();
+    }
+  }
+
+  private handleMouseLeave(ref) {
+    return function(event) {
+      ref.hovered = false;
+      ref.updateColor();
+    }
+  }
+
+  private handleMouseDown(ref) {
+    return function(event) {
+      ref.clicked = true;
+      var parent = ref.svgElement.parentElement
+      parent.addEventListener('mousemove', ref.handleMouseMove(ref))
+      ref.updateColor();
+    }
+  }
+
+  private handleMouseUp(ref) {
+    return function(event) {
+      ref.clicked = false;
+      var parent = ref.svgElement.parentElement
+      parent.removeEventListener('mousemove', ref.handleMouseMove(ref))
+      ref.updateColor();
+    }
+  }
+
+  private handleMouseMove(ref) {
+    return function(event) {
+      if (ref.clicked) {
+        ref.svgElement.setAttribute("cx", event.clientX);
+        ref.svgElement.setAttribute("cy", event.clientY);
+      }
+    }
+  }
+
+  private updateColor() {
+    if (this.clicked) {
+      this.svgElement.setAttribute("stroke", '#FF5');
+    }
+    else if (this.hovered) {
+      this.svgElement.setAttribute("stroke", '#55F');
+    }
+    else {
+      this.svgElement.setAttribute("stroke", '#FFF');
+    }
+
+  }
+
 }

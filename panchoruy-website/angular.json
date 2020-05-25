@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "panchoruy-website"
+  "defaultProject": "panchoruy-website",
+  "cli": {
+    "analytics": false
+  }
 }
