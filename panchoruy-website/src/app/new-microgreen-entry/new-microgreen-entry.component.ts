@@ -10,18 +10,17 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 export class NewMicrogreenEntryComponent implements OnInit {
 
   crop_type: string;
-  cropsWriteable: AngularFireList<string>;
+  cropsTypesWriteable: AngularFireList<string>;
 
   constructor(firebase: AngularFireDatabase, public dialogRef: MatDialogRef<NewMicrogreenEntryComponent>) {
-    this.cropsWriteable = firebase.list('crops');
+    this.cropsTypesWriteable = firebase.list('crop_types');
   }
 
   ngOnInit(): void {
   }
 
   pushNewCrop() {
-    console.log("this is happening");
-    this.cropsWriteable.push(this.crop_type);
+    this.cropsTypesWriteable.push(this.crop_type);
   }
 
 }

@@ -1,9 +1,9 @@
 <ul>
-  <li class="text" *ngFor="let crop of crops | async">
-    {{crop}}
+  <li class="text" *ngFor="let crop_type of crop_types | async">
+    {{crop_type}}
   </li>
 </ul>
-<button mat-button aria-label="New crop" (click)="newCropType()">
-  <mat-icon>add</mat-icon> New crop type
+<button mat-button aria-label="New Crop Type" (click)="newCropType()">
+  <mat-icon>add</mat-icon> New Crop Type
 </button>
 

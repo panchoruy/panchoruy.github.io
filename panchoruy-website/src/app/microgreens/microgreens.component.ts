@@ -11,10 +11,10 @@ import { NewMicrogreenEntryComponent } from '../new-microgreen-entry/new-microgr
 })
 export class MicrogreensComponent implements OnInit {
 
-  crops: Observable<any[]>;
+  crop_types: Observable<any[]>;
 
   constructor(firebase: AngularFireDatabase, public dialog: MatDialog) {
-    this.crops = firebase.list('crops').valueChanges();
+    this.crop_types = firebase.list('crop_types', ref => ref.orderByValue()).valueChanges();
   }
 
   newCropType() {
