@@ -1,3 +1,9 @@
-<button mat-fab color="secondary" aria-label="New entry" (click)="newEntry()">
+<!-- <button mat-fab color="secondary" aria-label="New entry" (click)="newEntry()">
   <mat-icon>add</mat-icon>
-</button>
+</button> -->
+<ul>
+  <li class="text" *ngFor="let item of (items | async) | keyvalue">
+    {{item.key}} : {{item.value}}
+  </li>
+</ul>
+

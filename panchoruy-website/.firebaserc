@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "microgreen-app": {
+      "hosting": {
+        "panchoruy-website": [
+          "microgreen-app"
+        ]
+      }
+    }
+  }
+}
