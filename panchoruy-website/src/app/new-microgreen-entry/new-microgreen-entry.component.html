@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>New Crop</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Crop Type</mat-label>
+    <input matInput [(ngModel)]="data.crop_type">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="data.crop_type" cdkFocusInitial>Save</button>
+</div>
