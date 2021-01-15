@@ -6,11 +6,13 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PhotographyComponent } from './photography/photography.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { MicrogreensComponent } from './microgreens/microgreens.component';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
   {path: "photography", component: PhotographyComponent},
   {path: "projects", component: ProjectsComponent},
+  {path: "micro", component: MicrogreensComponent},
   {path: "about", component: AboutComponent},
   {path: "**", component: PageNotFoundComponent},
 ];
