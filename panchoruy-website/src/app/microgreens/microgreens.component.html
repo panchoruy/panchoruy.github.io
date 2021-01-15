@@ -1,9 +1,9 @@
-<!-- <button mat-fab color="secondary" aria-label="New entry" (click)="newEntry()">
-  <mat-icon>add</mat-icon>
-</button> -->
 <ul>
-  <li class="text" *ngFor="let item of (items | async) | keyvalue">
-    {{item.key}} : {{item.value}}
+  <li class="text" *ngFor="let crop of crops | async">
+    {{crop}}
   </li>
 </ul>
+<button mat-button aria-label="New crop" (click)="newCropType()">
+  <mat-icon>add</mat-icon> New crop type
+</button>
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { NewMicrogreenEntryComponent } from '../new-microgreen-entry/new-microgreen-entry.component'
 
 @Component({
@@ -11,17 +11,14 @@ import { NewMicrogreenEntryComponent } from '../new-microgreen-entry/new-microgr
 })
 export class MicrogreensComponent implements OnInit {
 
-  crop_type: string;
-  items: Observable<any>;
+  crops: Observable<any[]>;
 
   constructor(firebase: AngularFireDatabase, public dialog: MatDialog) {
-    this.items = firebase.object('items').valueChanges();
+    this.crops = firebase.list('crops').valueChanges();
   }
 
-  newEntry() {
-    const dialogRef = this.dialog.open(NewMicrogreenEntryComponent, {
-      data: { crop_type: this.crop_type }
-    });
+  newCropType() {
+    const dialogRef = this.dialog.open(NewMicrogreenEntryComponent, {});
   }
 
   ngOnInit(): void {

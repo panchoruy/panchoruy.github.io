@@ -1,9 +1,6 @@
-import { Component, OnInit, Inject} from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-export interface DialogData {
-  crop_type: string;
-}
+import { Component, OnInit} from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
 @Component({
   selector: 'app-new-microgreen-entry',
@@ -12,10 +9,19 @@ export interface DialogData {
 })
 export class NewMicrogreenEntryComponent implements OnInit {
 
-  constructor(public dialogRef: MatDialogRef<NewMicrogreenEntryComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+  crop_type: string;
+  cropsWriteable: AngularFireList<string>;
+
+  constructor(firebase: AngularFireDatabase, public dialogRef: MatDialogRef<NewMicrogreenEntryComponent>) {
+    this.cropsWriteable = firebase.list('crops');
+  }
 
   ngOnInit(): void {
+  }
+
+  pushNewCrop() {
+    console.log("this is happening");
+    this.cropsWriteable.push(this.crop_type);
   }
 
 }
