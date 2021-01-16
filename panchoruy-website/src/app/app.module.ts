@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 // Angular Material Components
 import { AngularFireModule } from '@angular/fire';
@@ -13,7 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { FormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 // Providers
 import { PhotoService } from './photo.service';
@@ -34,6 +35,7 @@ import { ProjectsComponent } from './projects/projects.component';
 
 // Environment
 import { environment } from '../environments/environment';
+import { NewTrayValueComponent } from './new-tray-value/new-tray-value.component';
 
 
 @NgModule({
@@ -49,6 +51,7 @@ import { environment } from '../environments/environment';
     PhotoComponent,
     PhotographyComponent,
     ProjectsComponent,
+    NewTrayValueComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -64,6 +67,7 @@ import { environment } from '../environments/environment';
     MatInputModule,
     MatToolbarModule,
     FormsModule,
+    MatSelectModule,
   ],
   providers: [
     PhotoService

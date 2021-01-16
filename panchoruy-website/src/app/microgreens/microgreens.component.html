@@ -1,9 +1,26 @@
-<ul>
+<!-- <ul>
   <li class="text" *ngFor="let crop_type of crop_types | async">
     {{crop_type}}
   </li>
 </ul>
 <button mat-button aria-label="New Crop Type" (click)="newCropType()">
   <mat-icon>add</mat-icon> New Crop Type
-</button>
+</button> -->
+<mat-form-field appearance="fill">
+  <mat-label>Rack</mat-label>
+  <mat-select [(value)]="currentRack" (selectionChange)="updateTrays()">
+    <mat-option *ngFor="let rack of (racks | async) | keyvalue" [value]="rack.key">
+      {{rack.key}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<br>
+<div fxLayout="row wrap">
+	<button fxFlex="25%" mat-stroked-button *ngFor="let tray of (trays | async) | keyvalue : compareNumber" (click)="newTrayValueDialog(currentRack, tray.key)" [ngClass]="{greenButton : tray.value != 0}">
+		{{tray.key}} : {{tray.value == 0 ? "Add" : tray.value}}
+	</button>
+</div>
+
+
+
 
