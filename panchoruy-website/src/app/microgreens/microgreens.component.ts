@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 import { NewMicrogreenEntryComponent } from '../new-microgreen-entry/new-microgreen-entry.component'
 import { PlantNewComponent } from '../plant-new/plant-new.component'
+import { PlantDetailsComponent } from '../plant-details/plant-details.component'
 
 export class Rack {
   trays: {
@@ -23,7 +24,7 @@ export class MicrogreensComponent implements OnInit {
   racksRef: AngularFireObject<Rack>;
   trays: Observable<any>;
   firebase: AngularFireDatabase;
-  traysSnapshot: any;
+  racksSnapshot: any;
 
   // Default Rack
   currentRack = "1";
@@ -31,9 +32,8 @@ export class MicrogreensComponent implements OnInit {
 
   constructor(firebase: AngularFireDatabase, public dialog: MatDialog) {
     this.firebase = firebase;
-    this.racksRef = this.firebase.object('racks');
-    this.racksRef.snapshotChanges().subscribe(event => this.traysSnapshot = event);
-    this.racks = this.racksRef.valueChanges();
+    this.racks = this.firebase.object('racks').valueChanges();
+    this.racks.subscribe(event => this.racksSnapshot = event);
     this.updateTrays();
   }
 
@@ -41,9 +41,12 @@ export class MicrogreensComponent implements OnInit {
     const dialogRef = this.dialog.open(NewMicrogreenEntryComponent, {});
   }
 
-  PlantNewDialog(rack_number, tray_index, tray_value) {
+  handleTrayClick(tray_number, tray_value) {
     if (tray_value == 0) {
-      this.openPlantNewDialog(this.traysSnapshot.payload.child(rack_number + "/trays").ref, tray_index)
+      this.openPlantNewDialog(tray_number)
+    }
+    else {
+      this.openPlantDetailsDialog(tray_number)
     }
   }
 
@@ -52,17 +55,38 @@ export class MicrogreensComponent implements OnInit {
     this.trays = this.firebase.object('racks/' + this.currentRack + '/trays').valueChanges();
   }
 
-  openPlantNewDialog(trays, tray_index): void {
+  openPlantDetailsDialog(tray_number) {
+    var tray = this.firebase.object('racks/' + this.currentRack + '/trays/' + tray_number).valueChanges();
+    tray.subscribe(event => {
+      this.dialog.open(PlantDetailsComponent, { 
+        data: {
+          rack_number: this.currentRack,
+          tray_number: tray_number,
+          crop_id: event
+        }
+      });   
+    });
+  }
+
+  openPlantNewDialog(tray_number): void {
     this.dialog.open(PlantNewComponent, { 
       data: {
-        trays: trays,
-        tray_index: tray_index
+        rack_number: this.currentRack,
+        tray_number: tray_number
       }
     });
   }
 
   compareNumber(a, b) {
     return a.key - b.key
+  }
+
+  buttonValue(tray_value) {
+    if (tray_value == 0) {
+      return "Plant New";
+    } else {
+      return tray_value
+    }
   }
 
   ngOnInit(): void {

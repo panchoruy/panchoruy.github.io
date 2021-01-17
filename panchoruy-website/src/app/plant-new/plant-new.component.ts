@@ -4,10 +4,6 @@ import { AngularFireObject } from '@angular/fire/database';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 
-export class Tray {
-	[name: number]: string
-}
-
 @Component({
   selector: 'app-plant-new',
   templateUrl: './plant-new.component.html',
@@ -15,28 +11,38 @@ export class Tray {
 })
 export class PlantNewComponent implements OnInit {
 
-	tray_value: string;
-	tray_index: number;
-	trays: AngularFireObject<Tray>;
+	crop_type_value: string;
+  seed_amount_value: number;
+	tray_number: number;
+	rack_number: number;
+  rack: AngularFireObject<any>;
+  crops: AngularFireList<any>;
   crop_types: Observable<any[]>;
 
   constructor(firebase: AngularFireDatabase,
   	public dialogRef: MatDialogRef<PlantNewComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { trays: AngularFireObject<string>, tray_index: number }) {
-  	this.trays = data.trays;
-  	this.tray_index = data.tray_index;
+    @Inject(MAT_DIALOG_DATA) public data: { rack_number: number, tray_number: number }) {
+  	this.rack = firebase.object('racks/' + data.rack_number + '/trays');
+  	this.tray_number = data.tray_number;
     this.crop_types = firebase.list('crop_types', ref => ref.orderByValue()).valueChanges();
+    this.crops = firebase.list('crops');
   }
 
   ngOnInit(): void {
   }
 
   updateTray() {
-  	this.trays.update({[this.tray_index]: this.tray_value});
+    var crop_ref = this.crops.push({
+      crop_type: this.crop_type_value, 
+      seed_amount: this.seed_amount_value, 
+      time_planted: Date.now()
+    });
+    var new_crop_id = crop_ref.key;
+    console.log("crop id is " + new_crop_id);
+  	this.rack.update({[this.tray_number]: new_crop_id});
   }
 
   cancelAndClose(): void {
     this.dialogRef.close();
   }
-
 }

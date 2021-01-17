@@ -15,6 +15,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatChipsModule } from '@angular/material/chips';
+
 
 // Providers
 import { PhotoService } from './photo.service';
@@ -36,6 +39,7 @@ import { ProjectsComponent } from './projects/projects.component';
 // Environment
 import { environment } from '../environments/environment';
 import { PlantNewComponent } from './plant-new/plant-new.component';
+import { PlantDetailsComponent } from './plant-details/plant-details.component';
 
 
 @NgModule({
@@ -52,6 +56,7 @@ import { PlantNewComponent } from './plant-new/plant-new.component';
     PhotographyComponent,
     ProjectsComponent,
     PlantNewComponent,
+    PlantDetailsComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
@@ -68,6 +73,8 @@ import { PlantNewComponent } from './plant-new/plant-new.component';
     MatToolbarModule,
     FormsModule,
     MatSelectModule,
+    MatDividerModule,
+    MatChipsModule,
   ],
   providers: [
     PhotoService

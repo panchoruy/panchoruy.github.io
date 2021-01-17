@@ -6,18 +6,22 @@
 <button mat-button aria-label="New Crop Type" (click)="newCropType()">
   <mat-icon>add</mat-icon> New Crop Type
 </button> -->
-<mat-form-field appearance="fill">
-  <mat-label>Rack</mat-label>
-  <mat-select [(value)]="currentRack" (selectionChange)="updateTrays()">
-    <mat-option *ngFor="let rack of (racks | async) | keyvalue" [value]="rack.key">
-      {{rack.key}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div fxLayoutAlign="center center">
+  <mat-form-field appearance="fill">
+    <mat-label>Rack</mat-label>
+    <mat-select [(value)]="currentRack" (selectionChange)="updateTrays()">
+      <mat-option *ngFor="let rack of (racks | async) | keyvalue" [value]="rack.key">
+        {{rack.key}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
 <br>
-<div fxLayout="row wrap">
-	<button fxFlex="25%" mat-stroked-button *ngFor="let tray of (trays | async) | keyvalue : compareNumber" (click)="PlantNewDialog(currentRack, tray.key, tray.value)" [ngClass]="{greenButton : tray.value != 0}">
-		{{tray.key}} : {{tray.value == 0 ? "Plant" : tray.value}}
+<div fxLayout="row wrap" fxLayoutGap="5px grid">
+	<button fxFlex="1 0 25%" mat-stroked-button *ngFor="let tray of (trays | async) | keyvalue : compareNumber" (click)="handleTrayClick(tray.key, tray.value)" [ngClass]="{greenButton : tray.value != 0}">
+		<mat-icon *ngIf="tray.value == 0">add</mat-icon> 
+    <mat-icon *ngIf="tray.value != 0">grass</mat-icon> 
+    <br>{{buttonValue(tray.value)}}
 	</button>
 </div>
 

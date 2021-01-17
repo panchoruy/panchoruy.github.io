@@ -1,0 +1,43 @@
+<div *ngIf="crop | async as crop_details">
+<h1 mat-dialog-title>{{crop_details.crop_type}}</h1>
+<div mat-dialog-content>
+		<p fxLayoutAlign="center center">
+			<mat-chip-list><mat-chip>Crop Id: {{crop_id}}</mat-chip></mat-chip-list>
+		</p>
+	<h3 fxLayoutAlign="center center">Recent History</h3>
+	<table mat-table></table>
+	<h3 fxLayoutAlign="center center">Actions</h3>
+	<div fxLayout="row" class="actionsList">
+		<button mat-stroked-button fxFlex="1 0 1">
+	  	<mat-icon>waves</mat-icon> 
+	  	<br>Water
+	  </button>
+	  <button mat-stroked-button fxFlex="1 0 1">
+	  	<mat-icon>grain</mat-icon>
+	  	<br>Mist
+	  </button>
+	  <button mat-stroked-button fxFlex="1 0 1">
+	  	<mat-icon>wb_iridescent</mat-icon>
+	  	<br>Weight
+	  </button>
+	  <button mat-stroked-button fxFlex="1 0 1">
+	  	<mat-icon>wb_sunny</mat-icon>
+	  	<br>Light
+	  </button>
+	</div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="removeCrop()" class="redButton" fxFlex="1 0 1">
+  	<mat-icon>delete</mat-icon>
+  	<br>Remove
+  </button>
+  <button mat-stroked-button fxFlex="1 0 1" class="greenButton" >
+		<mat-icon>content_cut</mat-icon> 
+		<br>Harvest
+	</button>
+  <button mat-button (click)="cancelAndClose()" cdkFocusInitial fxFlex="1 0 1">
+	  <mat-icon>done</mat-icon>
+	  <br>Done
+	</button>
+</div>
+</div>
