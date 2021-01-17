@@ -2,7 +2,7 @@
 <h1 mat-dialog-title>{{crop_details.crop_type}}</h1>
 <div mat-dialog-content>
 		<p fxLayoutAlign="center center">
-			<mat-chip-list><mat-chip>Crop Id: {{crop_id}}</mat-chip></mat-chip-list>
+			<mat-chip-list><mat-chip>State: {{crop_details.state}}</mat-chip></mat-chip-list>
 		</p>
 	<h3 fxLayoutAlign="center center">Recent History</h3>
 	<table mat-table></table>
@@ -18,24 +18,24 @@
 	  </button>
 	  <button mat-stroked-button fxFlex="1 0 1">
 	  	<mat-icon>wb_iridescent</mat-icon>
-	  	<br>Weight
+	  	<br>Remove Weight
 	  </button>
 	  <button mat-stroked-button fxFlex="1 0 1">
 	  	<mat-icon>wb_sunny</mat-icon>
 	  	<br>Light
 	  </button>
+	  <button mat-stroked-button fxFlex="1 0 1" class="greenButton" >
+			<mat-icon>content_cut</mat-icon> 
+			<br>Harvest
+		</button>
 	</div>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="removeCrop()" class="redButton" fxFlex="1 0 1">
+  <button mat-stroked-button (click)="removeCrop()" class="redButton" fxFlex="1 0 1">
   	<mat-icon>delete</mat-icon>
   	<br>Remove
   </button>
-  <button mat-stroked-button fxFlex="1 0 1" class="greenButton" >
-		<mat-icon>content_cut</mat-icon> 
-		<br>Harvest
-	</button>
-  <button mat-button (click)="cancelAndClose()" cdkFocusInitial fxFlex="1 0 1">
+  <button mat-stroked-button (click)="cancelAndClose()" cdkFocusInitial fxFlex="1 0 1">
 	  <mat-icon>done</mat-icon>
 	  <br>Done
 	</button>

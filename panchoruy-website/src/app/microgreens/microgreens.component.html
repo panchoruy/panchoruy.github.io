@@ -17,12 +17,14 @@
   </mat-form-field>
 </div>
 <br>
-<div fxLayout="row wrap" fxLayoutGap="5px grid">
-	<button fxFlex="1 0 25%" mat-stroked-button *ngFor="let tray of (trays | async) | keyvalue : compareNumber" (click)="handleTrayClick(tray.key, tray.value)" [ngClass]="{greenButton : tray.value != 0}">
-		<mat-icon *ngIf="tray.value == 0">add</mat-icon> 
-    <mat-icon *ngIf="tray.value != 0">grass</mat-icon> 
-    <br>{{buttonValue(tray.value)}}
-	</button>
+<div fxLayout="row wrap">
+  <div fxFlex="25%" class="trayContainer" *ngFor="let tray of (trays | async) | keyvalue : compareNumber">
+  	<button fxFlex mat-stroked-button (click)="handleTrayClick(tray.key, tray.value)" [ngClass]="{greenButton : tray.value != 0}">
+  		<mat-icon *ngIf="tray.value == 0">add</mat-icon> 
+      <mat-icon *ngIf="tray.value != 0">grass</mat-icon> 
+      <br>{{buttonValue(tray.value)}}
+  	</button>
+  </div>
 </div>
 
 

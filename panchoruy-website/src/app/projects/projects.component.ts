@@ -20,7 +20,6 @@ export class ProjectsComponent implements OnInit {
   }
 
   handleMouseDown(event) {
-    console.log(event);
     if (event.target.classList.contains('svg-canvas')) {
       this.createCircle(event.clientX, event.clientY);
     }

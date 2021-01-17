@@ -35,10 +35,10 @@ export class PlantNewComponent implements OnInit {
     var crop_ref = this.crops.push({
       crop_type: this.crop_type_value, 
       seed_amount: this.seed_amount_value, 
-      time_planted: Date.now()
+      time_planted: Date.now(),
+      state: "planted",
     });
     var new_crop_id = crop_ref.key;
-    console.log("crop id is " + new_crop_id);
   	this.rack.update({[this.tray_number]: new_crop_id});
   }
 

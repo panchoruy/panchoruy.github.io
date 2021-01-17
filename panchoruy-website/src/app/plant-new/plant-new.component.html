@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Assign Crop</h1>
+<h1 mat-dialog-title>Plant New Crop</h1>
 <div mat-dialog-content fxLayout="row wrap">
   <mat-form-field fxFlex="100%" appearance="outline">
     <mat-label>Crop Type</mat-label>
@@ -16,12 +16,12 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-stroked-button fxFlex="1 0 1" class="greenButton" [mat-dialog-close]="crop_type_value" cdkFocusInitial (click)="updateTray()">
-  	<mat-icon>grass</mat-icon>
-  	<br>Plant
-  </button>
   <button mat-stroked-button fxFlex="1 0 1" (click)="cancelAndClose()">
   	<mat-icon>close</mat-icon>
   	<br>Cancel
 	</button>
+  <button mat-stroked-button fxFlex="1 0 1" class="greenButton" [mat-dialog-close]="crop_type_value" cdkFocusInitial (click)="updateTray()">
+  	<mat-icon>grass</mat-icon>
+  	<br>Plant
+  </button>
 </div>

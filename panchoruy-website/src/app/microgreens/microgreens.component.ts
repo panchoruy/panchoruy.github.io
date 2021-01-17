@@ -41,31 +41,28 @@ export class MicrogreensComponent implements OnInit {
     const dialogRef = this.dialog.open(NewMicrogreenEntryComponent, {});
   }
 
-  handleTrayClick(tray_number, tray_value) {
-    if (tray_value == 0) {
+  handleTrayClick(tray_number, crop_id) {
+    if (crop_id == 0) {
       this.openPlantNewDialog(tray_number)
     }
     else {
-      this.openPlantDetailsDialog(tray_number)
+      this.openPlantDetailsDialog(tray_number, crop_id)
     }
   }
 
   updateTrays() {
-    console.log('racks/' + this.currentRack + '/trays');
     this.trays = this.firebase.object('racks/' + this.currentRack + '/trays').valueChanges();
   }
 
-  openPlantDetailsDialog(tray_number) {
-    var tray = this.firebase.object('racks/' + this.currentRack + '/trays/' + tray_number).valueChanges();
-    tray.subscribe(event => {
-      this.dialog.open(PlantDetailsComponent, { 
-        data: {
-          rack_number: this.currentRack,
-          tray_number: tray_number,
-          crop_id: event
-        }
-      });   
-    });
+  openPlantDetailsDialog(tray_number, crop_id) {
+    this.dialog.open(PlantDetailsComponent, {
+      width: "80%",
+      data: {
+        rack_number: this.currentRack,
+        tray_number: tray_number,
+        crop_id: crop_id
+      }
+    });   
   }
 
   openPlantNewDialog(tray_number): void {
@@ -85,6 +82,7 @@ export class MicrogreensComponent implements OnInit {
     if (tray_value == 0) {
       return "Plant New";
     } else {
+
       return tray_value
     }
   }
