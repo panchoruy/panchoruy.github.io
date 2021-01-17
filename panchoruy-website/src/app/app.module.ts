@@ -35,7 +35,7 @@ import { ProjectsComponent } from './projects/projects.component';
 
 // Environment
 import { environment } from '../environments/environment';
-import { NewTrayValueComponent } from './new-tray-value/new-tray-value.component';
+import { PlantNewComponent } from './plant-new/plant-new.component';
 
 
 @NgModule({
@@ -51,7 +51,7 @@ import { NewTrayValueComponent } from './new-tray-value/new-tray-value.component
     PhotoComponent,
     PhotographyComponent,
     ProjectsComponent,
-    NewTrayValueComponent,
+    PlantNewComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

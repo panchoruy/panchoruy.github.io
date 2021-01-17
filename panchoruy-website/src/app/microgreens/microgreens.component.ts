@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 import { NewMicrogreenEntryComponent } from '../new-microgreen-entry/new-microgreen-entry.component'
-import { NewTrayValueComponent } from '../new-tray-value/new-tray-value.component'
+import { PlantNewComponent } from '../plant-new/plant-new.component'
 
 export class Rack {
   trays: {
@@ -34,7 +34,6 @@ export class MicrogreensComponent implements OnInit {
     this.racksRef = this.firebase.object('racks');
     this.racksRef.snapshotChanges().subscribe(event => this.traysSnapshot = event);
     this.racks = this.racksRef.valueChanges();
-    this.crop_types = this.firebase.list('crop_types', ref => ref.orderByValue()).valueChanges();
     this.updateTrays();
   }
 
@@ -42,8 +41,10 @@ export class MicrogreensComponent implements OnInit {
     const dialogRef = this.dialog.open(NewMicrogreenEntryComponent, {});
   }
 
-  newTrayValueDialog(rack_number, tray_index) {
-    this.openDialogWithTrays(this.traysSnapshot.payload.child(rack_number + "/trays").ref, tray_index)
+  PlantNewDialog(rack_number, tray_index, tray_value) {
+    if (tray_value == 0) {
+      this.openPlantNewDialog(this.traysSnapshot.payload.child(rack_number + "/trays").ref, tray_index)
+    }
   }
 
   updateTrays() {
@@ -51,8 +52,8 @@ export class MicrogreensComponent implements OnInit {
     this.trays = this.firebase.object('racks/' + this.currentRack + '/trays').valueChanges();
   }
 
-  openDialogWithTrays(trays, tray_index): void {
-    this.dialog.open(NewTrayValueComponent, { 
+  openPlantNewDialog(trays, tray_index): void {
+    this.dialog.open(PlantNewComponent, { 
       data: {
         trays: trays,
         tray_index: tray_index

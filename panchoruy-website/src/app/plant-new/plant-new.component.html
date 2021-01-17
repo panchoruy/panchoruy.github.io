@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Assign Crop</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Crop Type</mat-label>
+    <mat-select [(value)]="tray_value">
+    	<mat-option *ngFor="let crop_type of (crop_types | async)" [value]="crop_type">
+      {{crop_type}}
+    	</mat-option>
+  	</mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button class="greenButton" [mat-dialog-close]="tray_value" cdkFocusInitial (click)="updateTray()">Save</button>
+  <button mat-button (click)="cancelAndClose()">Cancel</button>
+</div>

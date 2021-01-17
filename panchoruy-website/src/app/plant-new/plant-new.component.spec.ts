@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewTrayValueComponent } from './new-tray-value.component';
+import { PlantNewComponent } from './plant-new.component';
 
-describe('NewTrayValueComponent', () => {
-  let component: NewTrayValueComponent;
-  let fixture: ComponentFixture<NewTrayValueComponent>;
+describe('PlantNewComponent', () => {
+  let component: PlantNewComponent;
+  let fixture: ComponentFixture<PlantNewComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewTrayValueComponent ]
+      declarations: [ PlantNewComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NewTrayValueComponent);
+    fixture = TestBed.createComponent(PlantNewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

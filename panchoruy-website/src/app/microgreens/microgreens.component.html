@@ -16,8 +16,8 @@
 </mat-form-field>
 <br>
 <div fxLayout="row wrap">
-	<button fxFlex="25%" mat-stroked-button *ngFor="let tray of (trays | async) | keyvalue : compareNumber" (click)="newTrayValueDialog(currentRack, tray.key)" [ngClass]="{greenButton : tray.value != 0}">
-		{{tray.key}} : {{tray.value == 0 ? "Add" : tray.value}}
+	<button fxFlex="25%" mat-stroked-button *ngFor="let tray of (trays | async) | keyvalue : compareNumber" (click)="PlantNewDialog(currentRack, tray.key, tray.value)" [ngClass]="{greenButton : tray.value != 0}">
+		{{tray.key}} : {{tray.value == 0 ? "Plant" : tray.value}}
 	</button>
 </div>
 
