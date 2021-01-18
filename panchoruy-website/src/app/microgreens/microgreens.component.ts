@@ -5,6 +5,9 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angula
 import { NewMicrogreenEntryComponent } from '../new-microgreen-entry/new-microgreen-entry.component'
 import { PlantNewComponent } from '../plant-new/plant-new.component'
 import { PlantDetailsComponent } from '../plant-details/plant-details.component'
+import { AngularFireAuth } from '@angular/fire/auth';
+import firebase from 'firebase/app';
+
 
 export class Rack {
   trays: {
@@ -23,15 +26,16 @@ export class MicrogreensComponent implements OnInit {
   racks: Observable<any>;
   racksRef: AngularFireObject<Rack>;
   trays: Observable<any>;
-  firebase: AngularFireDatabase;
   racksSnapshot: any;
 
   // Default Rack
   currentRack = "1";
   trayNumbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
-  constructor(firebase: AngularFireDatabase, public dialog: MatDialog) {
-    this.firebase = firebase;
+  constructor(
+    public firebase: AngularFireDatabase, 
+    public auth: AngularFireAuth, 
+    public dialog: MatDialog) {
     this.racks = this.firebase.object('racks').valueChanges();
     this.racks.subscribe(event => this.racksSnapshot = event);
     this.updateTrays();
@@ -85,6 +89,14 @@ export class MicrogreensComponent implements OnInit {
 
       return tray_value
     }
+  }
+
+  login() {
+    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
+  logout() {
+    this.auth.signOut();
   }
 
   ngOnInit(): void {

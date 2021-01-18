@@ -6,6 +6,13 @@
 <button mat-button aria-label="New Crop Type" (click)="newCropType()">
   <mat-icon>add</mat-icon> New Crop Type
 </button> -->
+<div *ngIf="auth.user | async as user; else showLogin">
+  <h1>{{ user.displayName }}</h1>
+  <button mat-button (click)="logout()">Logout</button>
+</div>
+<ng-template #showLogin>
+  <button mat-button (click)="login()">Login with Google</button>
+</ng-template>
 <div fxLayoutAlign="center center">
   <mat-form-field appearance="fill">
     <mat-label>Rack</mat-label>
