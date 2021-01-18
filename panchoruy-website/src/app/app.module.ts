@@ -17,7 +17,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTableModule } from '@angular/material/table';
 
 // Providers
 import { PhotoService } from './photo.service';
@@ -75,6 +76,8 @@ import { PlantDetailsComponent } from './plant-details/plant-details.component';
     MatSelectModule,
     MatDividerModule,
     MatChipsModule,
+    MatSnackBarModule,
+    MatTableModule,
   ],
   providers: [
     PhotoService

@@ -25,9 +25,12 @@
 <div fxLayout="row wrap">
   <div fxFlex="25%" class="trayContainer" *ngFor="let tray of (trays | async) | keyvalue : compareNumber">
       <ng-container *ngIf="tray.value != 0; else newPlant">
-        <button fxFlex mat-stroked-button (click)="openPlantDetailsDialog(tray.key, tray.value)" class="greenButton" style="overflow: hidden">
+        <button fxFlex mat-stroked-button (click)="openPlantDetailsDialog(tray.key, tray.value.crop_id)" class="greenButton" style="overflow: hidden">
           <mat-icon>grass</mat-icon> 
-          <br>{{tray.value}}
+          <div fxLayout="row wrap">
+            <div fxFlex>{{tray.value.crop_type}}</div>
+            <div fxFlex>({{ages[tray.value.crop_id]}} days)</div>
+          </div>
         </button>
       </ng-container>
       <ng-template #newPlant>

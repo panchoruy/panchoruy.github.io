@@ -7,13 +7,21 @@ import { PlantNewComponent } from '../plant-new/plant-new.component'
 import { PlantDetailsComponent } from '../plant-details/plant-details.component'
 import { AngularFireAuth } from '@angular/fire/auth';
 import firebase from 'firebase/app';
+import { mergeMap, map } from 'rxjs/operators';
 
 
 export class Rack {
-  trays: {
-    [name: string]: string
+  [rack_number: number]: {
+    [tray_number: number]: {
+      crop_type: string,
+      time_planted: Date,
+      crop_id: string,
+    }
   };
 }
+
+const MILLISECONDS_IN_A_DAY = 1000 * 60 * 60 * 24;
+
 
 @Component({
   selector: 'app-microgreens',
@@ -26,18 +34,26 @@ export class MicrogreensComponent implements OnInit {
   racks: Observable<any>;
   racksRef: AngularFireObject<Rack>;
   trays: Observable<any>;
-  racksSnapshot: any;
+  racks_with_details: Observable<any>;
 
   // Default Rack
   currentRack = "1";
-  trayNumbers = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+  ages = {};
 
   constructor(
     public firebase: AngularFireDatabase, 
     public auth: AngularFireAuth, 
     public dialog: MatDialog) {
     this.racks = this.firebase.object('racks').valueChanges();
-    this.racks.subscribe(event => this.racksSnapshot = event);
+    this.racks.subscribe(racks => {
+      Object.values(racks).forEach((trays: Rack) => {
+        Object.values(trays).forEach(tray => {
+          if (tray != 0) {
+            this.ages[tray.crop_id] = ((Date.now() - tray.time_planted) / MILLISECONDS_IN_A_DAY) >> 0;
+          }
+        });
+      });
+    });
     this.updateTrays();
   }
 
@@ -46,12 +62,11 @@ export class MicrogreensComponent implements OnInit {
   }
 
   updateTrays() {
-    this.trays = this.firebase.object('racks/' + this.currentRack + '/trays').valueChanges();
+    this.trays = this.firebase.object('racks/' + this.currentRack).valueChanges();
   }
 
   openPlantDetailsDialog(tray_number, crop_id) {
     this.dialog.open(PlantDetailsComponent, {
-      width: "80%",
       data: {
         rack_number: this.currentRack,
         tray_number: tray_number,
