@@ -45,15 +45,6 @@ export class MicrogreensComponent implements OnInit {
     const dialogRef = this.dialog.open(NewMicrogreenEntryComponent, {});
   }
 
-  handleTrayClick(tray_number, crop_id) {
-    if (crop_id == 0) {
-      this.openPlantNewDialog(tray_number)
-    }
-    else {
-      this.openPlantDetailsDialog(tray_number, crop_id)
-    }
-  }
-
   updateTrays() {
     this.trays = this.firebase.object('racks/' + this.currentRack + '/trays').valueChanges();
   }
@@ -83,12 +74,7 @@ export class MicrogreensComponent implements OnInit {
   }
 
   buttonValue(tray_value) {
-    if (tray_value == 0) {
-      return "Plant New";
-    } else {
-
-      return tray_value
-    }
+    return this.firebase.object("crops/" + tray_value).valueChanges();
   }
 
   login() {

@@ -1,19 +1,16 @@
-<!-- <ul>
-  <li class="text" *ngFor="let crop_type of crop_types | async">
-    {{crop_type}}
-  </li>
-</ul>
-<button mat-button aria-label="New Crop Type" (click)="newCropType()">
-  <mat-icon>add</mat-icon> New Crop Type
-</button> -->
-<div style="position: fixed; right: 0" fxLayout="row" fxLayoutAlign="end" *ngIf="auth.user | async as user; else showLogin">
-  <h3>{{user.displayName}} <button style="margin: 5px" mat-stroked-button (click)="logout()">Logout</button></h3>
+<!-- Log in -->
+<div style="height: 50px" fxLayout="row" fxLayoutAlign="end" >
+  <ng-container *ngIf="auth.user | async as user; else showLogin">
+    <p>Logged in as {{user.displayName}}</p>
+    <button style="margin: 5px" mat-stroked-button (click)="logout()">Logout</button>
+  </ng-container>
+  <ng-template style="position: fixed; right: 0" #showLogin>
+    <div fxLayout="row" fxLayoutAlign="end">
+      <button mat-stroked-button (click)="login()" style="margin: 5px">Login with Google</button>
+    </div>
+  </ng-template>
 </div>
-<ng-template style="position: fixed; right: 0" #showLogin>
-  <div fxLayout="row" fxLayoutAlign="end">
-    <button mat-stroked-button (click)="login()" style="margin: 5px">Login with Google</button>
-  </div>
-</ng-template>
+
 <div fxLayoutAlign="center center">
   <mat-form-field appearance="fill">
     <mat-label>Rack</mat-label>
@@ -27,11 +24,18 @@
 <br>
 <div fxLayout="row wrap">
   <div fxFlex="25%" class="trayContainer" *ngFor="let tray of (trays | async) | keyvalue : compareNumber">
-  	<button fxFlex mat-stroked-button (click)="handleTrayClick(tray.key, tray.value)" [ngClass]="{greenButton : tray.value != 0}">
-  		<mat-icon *ngIf="tray.value == 0">add</mat-icon> 
-      <mat-icon *ngIf="tray.value != 0">grass</mat-icon> 
-      <br>{{buttonValue(tray.value)}}
-  	</button>
+      <ng-container *ngIf="tray.value != 0; else newPlant">
+        <button fxFlex mat-stroked-button (click)="openPlantDetailsDialog(tray.key, tray.value)" class="greenButton" style="overflow: hidden">
+          <mat-icon>grass</mat-icon> 
+          <br>{{tray.value}}
+        </button>
+      </ng-container>
+      <ng-template #newPlant>
+  	    <button fxFlex mat-stroked-button (click)="openPlantNewDialog(tray.key)">
+    		  <mat-icon>add</mat-icon>
+          <br>Plant Crop
+  	    </button>
+      </ng-template>
   </div>
 </div>
 
