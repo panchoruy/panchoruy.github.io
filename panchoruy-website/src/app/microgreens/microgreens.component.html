@@ -28,8 +28,8 @@
         <button fxFlex mat-stroked-button (click)="openPlantDetailsDialog(tray.key, tray.value.crop_id)" class="greenButton" style="overflow: hidden">
           <mat-icon>grass</mat-icon> 
           <div fxLayout="row wrap">
-            <div fxFlex>{{tray.value.crop_type}}</div>
-            <div fxFlex>({{ages[tray.value.crop_id]}} days)</div>
+            <span fxFlex="100%">{{tray.value.crop_type}}</span>
+            <span fxFlex="100%">({{ages[tray.value.crop_id]}} days)</span>
           </div>
         </button>
       </ng-container>

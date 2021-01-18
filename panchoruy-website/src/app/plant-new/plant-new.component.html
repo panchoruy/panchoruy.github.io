@@ -2,9 +2,9 @@
 <div mat-dialog-content fxLayout="row wrap">
   <mat-form-field fxFlex="100%" appearance="outline">
     <mat-label>Crop Type</mat-label>
-    <mat-select [(value)]="crop_type_value">
-    	<mat-option *ngFor="let crop_type of (crop_types | async)" [value]="crop_type">
-      {{crop_type}}
+    <mat-select [(value)]="crop_type">
+    	<mat-option *ngFor="let crop_type of (crop_types | async) | keyvalue" [value]="crop_type">
+      {{crop_type.key}}
     	</mat-option>
   	</mat-select>
   </mat-form-field>
@@ -19,8 +19,16 @@
   	<mat-icon>close</mat-icon>
   	<br>Cancel
 	</button>
-  <button mat-stroked-button fxFlex="1 0 1" class="greenButton" [mat-dialog-close]="crop_type_value" cdkFocusInitial (click)="updateTray()">
-  	<mat-icon>grass</mat-icon>
-  	<br>Plant
-  </button>
+	<ng-container *ngIf="crop_type.value.pre_soak; else plant">
+		<button mat-stroked-button fxFlex="1 0 1" class="blueButton" [mat-dialog-close]="crop_type" cdkFocusInitial (click)="updateTray()">
+	  	<mat-icon>local_drink</mat-icon>
+	  	<br>Pre-Soak
+	  </button>	
+	</ng-container>
+	<ng-template #plant>
+		<button mat-stroked-button fxFlex="1 0 1" class="greenButton" [mat-dialog-close]="crop_type" cdkFocusInitial (click)="updateTray()">
+	  	<mat-icon>grass</mat-icon>
+	  	<br>Plant
+	  </button>
+	</ng-template>
 </div>

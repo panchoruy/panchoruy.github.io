@@ -6,11 +6,15 @@
 		</p>
 	<h3 fxLayoutAlign="center center">Actions</h3>
 	<div fxLayout="row wrap" class="actionsList" *ngIf="crop.state != 'harvested' && crop.state != 'removed'">
-	  <button mat-stroked-button fxFlex="1 0 100px" (click)="handleMist()">
+	  <button mat-stroked-button fxFlex="1 0 100px" class="greenButton" (click)="handlePlant()" *ngIf="crop.state == 'pre-soak'">
+	  	<mat-icon>grass</mat-icon>
+	  	<br>Plant
+	  </button>
+	  <button mat-stroked-button fxFlex="1 0 100px" (click)="handleMist()" *ngIf="crop.state != 'pre-soak'">
 	  	<mat-icon>grain</mat-icon>
 	  	<br>Mist
 	  </button>
-		<button mat-stroked-button fxFlex="1 0 100px" (click)="handleWater()">
+		<button mat-stroked-button fxFlex="1 0 100px" (click)="handleWater()" *ngIf="crop.state != 'pre-soak'">
 	  	<mat-icon>waves</mat-icon> 
 	  	<br>Water
 	  </button>

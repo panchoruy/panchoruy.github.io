@@ -52,6 +52,12 @@ export class PlantDetailsComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  handlePlant() {
+  	this.crop_history_ref.push({ time: Date.now(), action: "plant" });
+    this.crop_ref.update({state: "planted"});
+  	this.notify("Planted!");
+  }
+
   handleMist() {
   	this.crop_history_ref.push({ time: Date.now(), action: "mist" });
   	this.notify("Misted!");
